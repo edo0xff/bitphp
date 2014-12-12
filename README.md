@@ -26,4 +26,4 @@ Enlaces
 - Guia de instalacion - http://root404.com/blog/bitphp/guia-1/
 - Acerca de - http://test.root404.com/about
 - Aplicacion de notas en 15 min - http://root404.com/blog/bitphp/guia-3/
-- Documentacion - http://bitphp.root404.com/docs/html/ (ya esta actualizada)
+- Documentacion - http://bitphp.root404.com/docs/ (ya esta actualizada)
