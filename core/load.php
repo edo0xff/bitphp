@@ -37,7 +37,25 @@
       } else {
         throw new Exception('El fichero <b>'.$f.'</b> no existe');
       }
-    }  
+    }
+
+    /**
+    * Attempts to load the specified helper, only includes the file.
+    *
+    * @param string $_name Name of the helper to be loaded, without extension.
+    * @param mixed $_params Parameters that could ever need the constructor of the class library.
+    * @return void
+    */
+    public static function helper($_name) {
+      $file = 'core/helpers/'.$_name.'.php';
+      try {
+        self::include_file($file, null);
+      } catch(Exception $e) {
+        $d = 'El ayudante <b>'.$_name.'</b> no se pudo cargar';
+        $c = $e->getMessage();
+        \BitPHP\Error::trace($d, $c);
+      }
+    }    
 
     /**
     *	Attempts to load the specified library, if successful returns an object of this.
@@ -123,6 +141,35 @@
           \BitPHP\Error::trace($d, $c);
         }
       }
+    }
+
+    /**
+    * Attempts to load and display the specified view, but you can use {$foo} instead of <?php echo $foo ?>.
+    *
+    * @param string $_name Name of the helper to be loaded, without extension.
+    * @param mixed $_params Parameters that could ever need the constructor of the class library.
+    * @return void
+    */
+    public function template($view, $values) {
+      $search  = ['<?'];
+      $replace = ['<?php'];
+
+      $_content = @file_get_contents('app/views/'.$view.'.php');
+
+      if($_content === FALSE){
+        $m = 'Error al renderizar <b>'.$view.'</b>';
+        $c = 'El fichero <b>/app/views/'.$view.'</b> no existe!';
+        \BitPHP\Error::trace($m, $c);
+        return 0;
+      }
+
+        foreach ($values as $key => $value) {
+          array_push($search, "@$key");
+          array_push($replace, $value);
+        }
+
+        $_content = str_replace($search, $replace, $_content);
+        eval('?> '.$_content.'<?php ');
     }
     
   }
