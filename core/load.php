@@ -151,8 +151,23 @@
     * @return void
     */
     public function template($view, $values) {
-      $search  = ['<?'];
-      $replace = ['<?php'];
+      $search  = [
+        '<?',
+        '{¿',
+        ':}',
+        '{!¿',
+        '{!}',
+        '{/?}'
+      ];
+
+      $replace = [
+        '<?php',
+        '<?php if(',
+        '): ?>',
+        '<?php elseif(',
+        '<?php else: ?>',
+        '<?php endif ?>'
+      ];
 
       $_content = @file_get_contents('app/views/'.$view.'.php');
 
