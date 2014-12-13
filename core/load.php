@@ -9,7 +9,7 @@
   *
   *	@author Eduardo B <ms7rbeta@gmail.com>
   *	@version stable 1.5.0
-  *	@package BitPHP
+  * @package Core
   *	@copyright 2014 Root404 Co.
   *	@website http://bitphp.root404.com <contacto@root404.com>
   *	@license GNU/GPLv3
@@ -28,16 +28,16 @@
     */
     private static function include_file(&$f, $c) {
       if( file_exists($f) ) {
-	require($f);
-	if( !$c || class_exists($c) ) {
-	  return 1;
-	} else {
-	  throw new Exception('La clase <b>'.$c.'</b> no existe dentro del fichero <b>'.$f.'</b>.');
-	}
+        require($f);
+        if( !$c || class_exists($c) ) {
+          return 1;
+        } else {
+          throw new Exception('La clase <b>'.$c.'</b> no existe dentro del fichero <b>'.$f.'</b>.');
+        }
       } else {
-	throw new Exception('El fichero <b>'.$f.'</b> no existe');
+        throw new Exception('El fichero <b>'.$f.'</b> no existe');
       }
-    }
+    }  
 
     /**
     *	Attempts to load the specified library, if successful returns an object of this.
@@ -50,13 +50,13 @@
     public static function library($_name, $_params = Null) {
       $file = 'app/libraries/'.$_name.'.php';
       try {
-	self::include_file($file, $_name);
-	$_instance = new $_name($_params);
-	return $_instance;
+        self::include_file($file, $_name);
+        $_instance = new $_name($_params);
+        return $_instance;
       }	catch(Exception $e) {
-	$d = 'La libreria <b>'.$_name.'</b> no se pudo cargar';
-	$c = $e->getMessage();
-	\BitPHP\Error::trace($d, $c);
+        $d = 'La libreria <b>'.$_name.'</b> no se pudo cargar';
+        $c = $e->getMessage();
+        \BitPHP\Error::trace($d, $c);
       }
     }
 
@@ -69,13 +69,13 @@
     public static function controller(&$_name) {
       $file = 'app/controllers/'.$_name.'.php';
       try {
-	\BitPHP\Load::include_file($file, $_name);
-	$_instance = new $_name();
-	return $_instance;
+        \BitPHP\Load::include_file($file, $_name);
+        $_instance = new $_name();
+        return $_instance;
       } catch(Exception $e) {
-	 $d = 'El controlador <b>'.$_name.'</b> no se pudo cargar.';
-	 $c = $e->getMessage();
-	 \BitPHP\Error::trace($d, $c, False);
+        $d = 'El controlador <b>'.$_name.'</b> no se pudo cargar.';
+        $c = $e->getMessage();
+        \BitPHP\Error::trace($d, $c, False);
       }
     }
 
@@ -89,13 +89,13 @@
     public static function model($_name) {
       $file = 'app/models/'.$_name.'.php';
       try {
-	\BitPHP\Load::include_file($file, $_name);
-	$_instance = new $_name();
-	return $_instance;
+        \BitPHP\Load::include_file($file, $_name);
+        $_instance = new $_name();
+        return $_instance;
       } catch(Exception $e) {
-	$d = 'El modelo <b>'.$_name.'</b> no se pudo cargar.';
-	$c = $e->getMessage();
-	\BitPHP\Error::trace($d, $c);
+        $d = 'El modelo <b>'.$_name.'</b> no se pudo cargar.';
+        $c = $e->getMessage();
+        \BitPHP\Error::trace($d, $c);
       }
     }
     
@@ -110,24 +110,20 @@
     public static function view($_names, $_params = Null) {
 
       if(!is_array($_names)) {
-	$_names = [$_names];
+        $_names = [$_names];
       }
 
-      if($_params) {
-	foreach($_params as $_var => $_val) {
-	  $$_var = $_val;
-	}
-      }
+      if($_params) { extract($_params); }
       
       foreach($_names as $_view) {
-	$file = 'app/views/'.$_view.'.php';
-	if(file_exists($file)) {
-	  require($file);
-	} else {
-	  $d = 'La vista <b>'.$_view.'</b> no se pudo cargar.';
-	  $c = 'El fichero <b>'.$file.'</b> no existe.';
-	  \BitPHP\Error::trace($d, $c);
-	}
+        $file = 'app/views/'.$_view.'.php';
+        if(file_exists($file)) {
+          require($file);
+        } else {
+          $d = 'La vista <b>'.$_view.'</b> no se pudo cargar.';
+          $c = 'El fichero <b>'.$file.'</b> no existe.';
+          \BitPHP\Error::trace($d, $c);
+        }
       }
     }
     
