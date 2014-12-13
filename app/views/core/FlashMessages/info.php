@@ -1,0 +1,1 @@
+<div class="alert alert-info" role="alert"><p><?php echo $content ?></div></p>

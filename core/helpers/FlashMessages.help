@@ -1,0 +1,16 @@
+	Este es un <b>helper</b> que te ayudara a mostrar distintos tipos de mensajes al usuario, un mensaje como este por ejemplo, los mensajes disponibles para mostrar son los siguientes:
+</p>
+<ul>
+	<li>normal()</li>
+	<li>info()</li>
+	<li>warning()</li>
+	<li>danger()</li>
+	<li>success()</li>
+</ul>
+<p>
+	Cada uno de ellos recibe 2 parametros, el titulo y el contenido:
+</p>
+<pre>
+	$this->info('Titulo','Hola mundo!');
+</pre>
+<p>
