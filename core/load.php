@@ -109,9 +109,7 @@
     */
     public static function view($_names, $_params = Null) {
 
-      if(!is_array($_names)) {
-        $_names = [$_names];
-      }
+      if(!is_array($_names)) { $_names = [$_names]; }
 
       if($_params) { extract($_params); }
       
