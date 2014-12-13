@@ -1,10 +1,5 @@
-<div class="modal fade" id="<?php echo $name ?>">
+<div class="modal fade" id="<?php echo md5($name) ?>">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">
-        	<span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span>
-        </button>
-        <h4 class="modal-title"><?php echo $title ?></h4>
-      </div>
-      <div class="modal-body">
+      <div class="panel panel-default">
+  		<div class="panel-body">

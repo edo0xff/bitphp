@@ -1,8 +1,6 @@
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
+		  </div><!-- /.panel-body -->
+		</div><!-- /.panel-default -->
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<script type="text/javascript"> window.onload = function(){ $('#<?php echo $name ?>').modal(); }</script>
+<script type="text/javascript"> $('#<?php echo md5($name) ?>').modal() </script>

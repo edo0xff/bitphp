@@ -1,1 +1,2 @@
-<div class="alert alert-danger" role="alert"><p><?php echo $content ?></div></p>
+<div class="alert alert-danger" role="alert"><p><?php echo $title ?></div></p>
+<p><?php echo $content ?></p>
