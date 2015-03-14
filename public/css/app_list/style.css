@@ -1,0 +1,36 @@
+@font-face {
+  font-family: 'Cardinal';
+  src: local('Cardinal'), url(../fonts/Cardinal.ttf);
+}
+
+html, body { background-color: #f2f2f2; color: #5C5C5C; }
+.title { font-family: "Cardinal" !important; font-size: 3em; }
+
+.blue-bottom { border-bottom: 2px solid rgba(29, 99, 179, 0.7); }
+.green-bottom { border-bottom: 2px solid rgba(29, 179, 116, 0.7); }
+.red-bottom { border-bottom: 2px solid rgba(179, 29, 29, 0.7); }
+
+.panel { background-color: #fff; color: #5C5C5C; padding: 10px 20px; margin-top: 30px; }
+.panel a { color: rgb(29, 99, 179) !important; }
+.form { position: relative; width: 100%; height: auto; }
+
+.form-control { font-size: 15px; padding: 10px 15px; }
+
+input[type="text"].form-control { position: relative; width: 100%; margin-bottom: 10px; border: 2px #ECECEC solid; border-radius: 6px; outline: none; }
+input[type="text"]:focus.form-control { border:2px solid rgba(29, 99, 179, 0.7); }
+
+button.form-control { background-color: rgba(29, 99, 179, 0.35); color: #fff; border: none; border-radius: 6px; }
+button.form-control:hover { background-color: rgba(29, 99, 179, 0.7); cursor: pointer; }
+
+footer { position: absolute; width: 100%; bottom: 10px; padding: 10px 15px; }
+
+/* TRANSITIONS  */
+  input[type="text"]:focus.form-control
+, button.form-control:hover
+{
+  -webkit-transition: all 0.25s ease;
+  -moz-transition: all 0.25s ease;
+  -ms-transition: all 0.25s ease;
+  -o-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+}

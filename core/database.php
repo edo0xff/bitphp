@@ -1,6 +1,7 @@
-<?php
-  namespace BitPHP;
+<?php namespace BitPHP;
+
   use PDO;
+  
   /**
   *	Provides methods for load easily PDO objects
   *
@@ -9,7 +10,7 @@
   *
   *	@author Eduardo B <ms7rbeta@gmail.com>
   *	@version beta 1.1.0
-  *	@package BitPHPCore
+  * @package Core
   *	@copyright 2014 Root404 Co.
   *	@website http://bitphp.root404.com <contacto@root404.com>
   *	@license GNU/GPLv3
@@ -25,14 +26,12 @@
     *	@example /var/www/docs/examples/DataBase_driver.php
     *	@todo modified to other controllers database and charset, mysql and utf8 by default
     */
-    public static function driver($dbname, $p = [
-				    'host'   => \BitPHP\Config::DEFAULT_HOST,
-				    'user'   => \BitPHP\Config::DEFAULT_USER,
-				    'pass'   => \BitPHP\Config::DEFAULT_PASS
-				])
-    {
-      $db = new PDO('mysql:host='.$p['host'].';dbname='.$dbname.';charset=utf8',$p['user'],$p['pass']);
-      return $db;
+    public static function driver($dbname, $p) {
+      $host = empty($p['host']) ? $p['host'] : Config::db_host();
+      $user = empty($p['user']) ? $p['user'] : Config::db_user();
+      $pass = empty($p['pass']) ? $p['pass'] : Config::db_pass();
+
+      return new PDO('mysql:host='.$host.';dbname='.$dbname.';charset=utf8',$user,$pass);
     }
 
     /**
@@ -45,13 +44,10 @@
     *	@example /var/www/docs/examples/DataBase_sanatize.php
     */
     public static function sanatize($string, $remove = False) {
-      $_warnings = ['\''];
+      $_warnings = ['\'','\\'];
+      $_replaces = $remove ? ['',''] : ['&#146;','\\\\'];
 
-      $_replaces = $remove ? [''] : ['&#146;'];
-      
-      $string = str_replace($_warnings, $_replaces, $string);
-
-      return $string;
+      return str_replace($_warnings, $_replaces, $string);
     }
 
   }

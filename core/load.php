@@ -1,6 +1,10 @@
-<?php
-  namespace BitPHP;
+<?php namespace BitPHP;
+
   use Exception;
+  use \BitPHP\Error;
+  use \BitPHP\Config;
+  use \BitPHP\Route;
+
   /**
   *	Provides methods for load views, libraries, models and controllers.
   *
@@ -8,7 +12,7 @@
   *	working with views, models and controllers.
   *
   *	@author Eduardo B <ms7rbeta@gmail.com>
-  *	@version stable 1.5.0
+  *	@version beta 1.6.0
   * @package Core
   *	@copyright 2014 Root404 Co.
   *	@website http://bitphp.root404.com <contacto@root404.com>
@@ -20,42 +24,32 @@
     /**
     *	Includes the specified file if it exists, and if the specified class is inside the file.
     *
-    *	@param string $f Path and file name to be loaded, passed by reference.
-    *	@param string $c Class that should exist inside the file.
+    *	@param string $_f Path and file name to be loaded, passed by reference.
+    *	@param string $_c Class that should exist inside the file.
     *	@throws FileNotExist if the file does not exist
     *	@throws ClassNotFound the file exist, but does not contain the proper class
     *	@return void
     */
-    private static function include_file(&$f, $c) {
-      if( file_exists($f) ) {
-        require($f);
-        if( !$c || class_exists($c) ) {
+    private static function include_file(&$_f, $_c) {
+      if( file_exists($_f) ) {
+        require_once($_f);
+        if( !$_c || class_exists($_c) ) {
           return 1;
         } else {
-          throw new Exception('La clase <b>'.$c.'</b> no existe dentro del fichero <b>'.$f.'</b>.');
+          throw new Exception('La clase <b>'.$_c.'</b> no existe dentro del fichero <b>'.$_f.'</b>.');
         }
       } else {
-        throw new Exception('El fichero <b>'.$f.'</b> no existe');
+        throw new Exception('El fichero <b>'.$_f.'</b> no existe');
       }
     }
 
-    /**
-    * Attempts to load the specified helper, only includes the file.
-    *
-    * @param string $_name Name of the helper to be loaded, without extension.
-    * @param mixed $_params Parameters that could ever need the constructor of the class library.
-    * @return void
-    */
-    public static function helper($_name) {
-      $file = 'core/helpers/'.$_name.'.php';
-      try {
-        self::include_file($file, null);
-      } catch(Exception $e) {
-        $d = 'El ayudante <b>'.$_name.'</b> no se pudo cargar';
-        $c = $e->getMessage();
-        \BitPHP\Error::trace($d, $c);
+    public static function auto() {
+      $_n = count(Config::$AUTO_LOAD);
+
+      for ($_i = 0; $_i < $_n; $_i++) { 
+        self::module(Config::$AUTO_LOAD[$_i]);
       }
-    }    
+    }
 
     /**
     *	Attempts to load the specified library, if successful returns an object of this.
@@ -65,16 +59,15 @@
     *	@return object
     *	@example /var/www/docs/examples/Load_library.php
     */
-    public static function library($_name, $_params = Null) {
-      $file = 'app/libraries/'.$_name.'.php';
+    public static function module($_name) {
+      $_file = 'core/modules/'. $_name .'.php';
+
       try {
-        self::include_file($file, $_name);
-        $_instance = new $_name($_params);
-        return $_instance;
-      }	catch(Exception $e) {
-        $d = 'La libreria <b>'.$_name.'</b> no se pudo cargar';
-        $c = $e->getMessage();
-        \BitPHP\Error::trace($d, $c);
+        self::include_file($_file, $_name);
+      }	catch(Exception $_e) {
+        $_d = 'El modulo <b>'.$_name.'</b> no se pudo cargar';
+        $_c = $_e->getMessage();
+        Error::trace($_d, $_c);
       }
     }
 
@@ -85,15 +78,16 @@
     *	@return object
     */
     public static function controller(&$_name) {
-      $file = 'app/controllers/'.$_name.'.php';
+      global $_APP;
+      $_file = $_APP .'/controllers/'.$_name.'.php';
       try {
-        \BitPHP\Load::include_file($file, $_name);
+        self::include_file($_file, $_name);
         $_instance = new $_name();
         return $_instance;
-      } catch(Exception $e) {
-        $d = 'El controlador <b>'.$_name.'</b> no se pudo cargar.';
-        $c = $e->getMessage();
-        \BitPHP\Error::trace($d, $c, False);
+      } catch(Exception $_e) {
+        $_d = 'El controlador <b>'.$_name.'</b> no se pudo cargar.';
+        $_c = $_e->getMessage();
+        Error::trace($_d, $_c, False);
       }
     }
 
@@ -105,15 +99,16 @@
     *	@example /var/www/docs/examples/Load_model.php
     */
     public static function model($_name) {
-      $file = 'app/models/'.$_name.'.php';
+      global $_APP;
+      $_file = $_APP .'/models/'.$_name.'.php';
       try {
-        \BitPHP\Load::include_file($file, $_name);
+        self::include_file($_file, $_name);
         $_instance = new $_name();
         return $_instance;
-      } catch(Exception $e) {
-        $d = 'El modelo <b>'.$_name.'</b> no se pudo cargar.';
-        $c = $e->getMessage();
-        \BitPHP\Error::trace($d, $c);
+      } catch(Exception $_e) {
+        $_d = 'El modelo <b>'.$_name.'</b> no se pudo cargar.';
+        $_c = $_e->getMessage();
+        Error::trace($_d, $_c);
       }
     }
     
@@ -125,66 +120,24 @@
     *	@return void
     *	@example /var/www/docs/examples/Load_view.php
     */
-    public static function view($_names, $_params = Null) {
+    public static function view($_names, $_params = array()) {
 
-      if(!is_array($_names)) { $_names = [$_names]; }
+      global $_APP;
+      $_names = is_array($_names) ? $_names : [$_names];
+      $_i = count($_names);
 
-      if($_params) { extract($_params); }
-      
-      foreach($_names as $_view) {
-        $file = 'app/views/'.$_view.'.php';
-        if(file_exists($file)) {
-          require($file);
+      extract($_params);
+
+      for($_j = 0; $_j < $_i; $_j++) {
+        $_file = $_APP .'/views/'.$_names[$_j].'.php';
+        if(file_exists($_file)) {
+          require($_file);
         } else {
-          $d = 'La vista <b>'.$_view.'</b> no se pudo cargar.';
-          $c = 'El fichero <b>'.$file.'</b> no existe.';
-          \BitPHP\Error::trace($d, $c);
+          $_d = 'La vista <b>'.$_names[$_j].'</b> no se pudo cargar.';
+          $_c = 'El fichero <b>'.$_file.'</b> no existe.';
+          Error::trace($_d, $_c);
         }
       }
-    }
-
-    /**
-    * Attempts to load and display the specified view, but you can use {$foo} instead of <?php echo $foo ?>.
-    *
-    * @param string $_name Name of the helper to be loaded, without extension.
-    * @param mixed $_params Parameters that could ever need the constructor of the class library.
-    * @return void
-    */
-    public function template($view, $values) {
-      $search  = [
-        '<?',
-        '{¿',
-        ':}',
-        '{!¿',
-        '{!}',
-        '{/?}'
-      ];
-
-      $replace = [
-        '<?php',
-        '<?php if(',
-        '): ?>',
-        '<?php elseif(',
-        '<?php else: ?>',
-        '<?php endif ?>'
-      ];
-
-      $_content = @file_get_contents('app/views/'.$view.'.php');
-
-      if($_content === FALSE){
-        $m = 'Error al renderizar <b>'.$view.'</b>';
-        $c = 'El fichero <b>/app/views/'.$view.'</b> no existe!';
-        \BitPHP\Error::trace($m, $c);
-        return 0;
-      }
-
-        foreach ($values as $key => $value) {
-          array_push($search, "@$key");
-          array_push($replace, $value);
-        }
-
-        $_content = str_replace($search, $replace, $_content);
-        eval('?> '.$_content.'<?php ');
     }
     
   }

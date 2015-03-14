@@ -1,4 +1,5 @@
 <?php
+
   /**
    *	BitPHP - Micro MVC Framework
    *
@@ -12,31 +13,34 @@
    *	@website http://bitphp.root404.com <contacto@root404.com>
    *	@license GNU/GPLv3
    */
-  require('core/errors.php');
+  
   require('core/config.php');
+  require('core/errors.php');
   require('core/load.php');
   require('core/database.php');
   require('core/input.php');
+  require('core/response.php');
+  require('core/route.php');
 
-  if(!\BitPHP\Config::DISPLAY_PHP_ERRORS) {
+  if( !\BitPHP\Config::php_errors() ) {
     error_reporting(0);
     ini_set('display_errors', '0');
   }
 
-  $_GET['bit_url'] = empty($_GET['bit_url']) ? \BitPHP\Config::DEFAULT_CONTROLLER : $_GET['bit_url'];
+  \BitPHP\Load::auto();
 
-  /** @var array $_URLPARAMS associative array contains the parameters received by the url */
-  $_URLPARAMS = explode('/', $_GET['bit_url']);
-  $controller = \BitPHP\Load::controller($_URLPARAMS[0]);
+  $_URL = \BitPHP\Route::parse_route();
+  $_APP = \BitPHP\Route::app_path( $_URL );
 
-  $_URLPARAMS[1] = empty($_URLPARAMS[1]) ? 'index' : $_URLPARAMS[1];
+  $method = \BitPHP\Route::get_method( $_URL );
+  $controller = \BitPHP\Route::get_controller( $_URL );
+  $controller_obj = \BitPHP\Load::controller( $controller ) ;
 
-  if(method_exists($controller, $_URLPARAMS[1])) {
-    $method = $_URLPARAMS[1];
-    $controller->$method();
+  if( method_exists($controller, $method) ) {
+    $controller_obj->$method();
   } else {
-    $d = 'Error en controlador <b>'.$_URLPARAMS[0].'</b>';
-    $m = 'No contiene el metodo <b>'.$_URLPARAMS[1].'()</b>';
+    $d = 'Error en controlador <b>'. $controller .'</b>';
+    $m = 'No contiene el metodo <b>'. $method .'()</b>';
     \BitPHP\Error::trace($d, $m, False);
   }
 ?>
