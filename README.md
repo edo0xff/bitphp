@@ -1,5 +1,3 @@
-[![logo](http://bitphp.root404.com/app/resources/icons/favicon.png)](http://bitphp.root404.com)
-
 BitPHP
 ======
 
