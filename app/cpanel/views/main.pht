@@ -3,7 +3,7 @@
 	<meta charset="utf-8">
 	<title>BitPHP | Mark V</title>
 	{css grid css}
-	{css app_list/style css}
+	{css welcome css}
 </head>
 <body>
 	<div class="container">
@@ -27,10 +27,6 @@
 							<a href="/{{ $app }}">{{  strtoupper( $app ) }}</a><br>
 						{/each}
 					</p>
-					<hr>
-					<form align="right">
-						<input type="text" class="form-control" placeholder="Crea una nueva app... :)">
-					</form>
 				</div>
 			</div>
 			<div class="col-sm-4">

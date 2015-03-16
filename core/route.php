@@ -18,6 +18,18 @@
 			return empty($_GET['_route']) ? array() : explode('/', $_GET['_route']) ;
 		}
 
+		public static function app_link() {
+			global $_URL;
+
+			$link = ( empty( $_SERVER['HTTPS'] ) ? 'http://' : 'https://' ) . $_SERVER['SERVER_NAME'];
+
+			if( Config::ENABLE_HMVC && ( Config::DEV || Config::ENABLE_PRO_MULTI_APP ) ) {
+				$link .= '/' . ( empty($_URL[0]) ? Config::MAIN_APP : $_URL[0] );
+			}
+
+			return $link;
+		}
+
 		public static function app_path( $route ) {
 			$path = 'app';
 

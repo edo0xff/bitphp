@@ -2,6 +2,7 @@
 	
 	use \BitPHP\Config;
 	use \BitPHP\Error;
+  use \BitPHP\Route;
 	
 	class Template {
 
@@ -15,12 +16,14 @@
     public function render($_tmplts, $_values = array()) {
       global $_APP;
       $_PUBLIC_PATH = Config::base_path() . 'public';
+      $_APP_LINK = Route::app_link();
 
       $_content = '';
-      $_search   = ['<?','{if',':}','{elif','{el}','{/if}','{{','}}','{each','{/each}','{css ',' css}'];
+      $_search   = ['<?','{if',':}','{elif','{el}','{/if}','{{','}}','{each','{/each}','{css ',' css}','{js ',' js}'];
       $_replace  = ['<?php','<?php if(','): ?>','<?php elseif(','<?php else: ?>','<?php endif ?>',
         '<?php echo','?>','<?php foreach(','<?php endforeach ?>',
-        '<link rel="stylesheet" type="text/css" href="'.$_PUBLIC_PATH.'/css/','.css">'];
+        '<link rel="stylesheet" type="text/css" href="'.$_PUBLIC_PATH.'/css/','.css">',
+        '<script src="'.$_PUBLIC_PATH.'/js/','.js"></script>'];
 
       // Para poder cargar mas de un template de una sola vez
       $_tmplts = is_array($_tmplts) ? $_tmplts : [$_tmplts];
@@ -40,7 +43,7 @@
       }
 
         extract($_values);
-        $_PATH = Config::base_path();
+
         $_content = str_replace($_search, $_replace, $_content);
         eval('?> '.$_content.'<?php ');
     }

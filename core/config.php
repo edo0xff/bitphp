@@ -21,7 +21,7 @@
     const ENABLE_HMVC = True;
     const ENABLE_PRO_MULTI_APP = False;
     const MAIN_CONTROLLER = 'home';
-    const MAIN_APP = 'welcome';
+    const MAIN_APP = 'cpanel';
     const MAIN_ACTION = 'main';
     const ERR_VIEW = null;
     const NOT_FOUND_VIEW = null;
@@ -41,7 +41,7 @@
     );
 
     public static $ON_PRO = array(
-        'APP_RUNNING' => 'welcome'
+        'APP_RUNNING' => 'cpanel'
       , 'BASE_PATH' => '/'
       , 'PHP_ERRORS' => False
       , 'DB_HOST' => 'localhost'

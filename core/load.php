@@ -123,10 +123,13 @@
     public static function view($_names, $_params = array()) {
 
       global $_APP;
+
       $_names = is_array($_names) ? $_names : [$_names];
       $_i = count($_names);
 
       extract($_params);
+      $_PUBLIC_PATH = Config::base_path() . 'public';
+      $_APP_LINK = Route::app_link();
 
       for($_j = 0; $_j < $_i; $_j++) {
         $_file = $_APP .'/views/'.$_names[$_j].'.php';
