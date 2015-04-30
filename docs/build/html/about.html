@@ -1,0 +1,759 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Acerca de bitphp &mdash; documentación de BitPHP - 1</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="author" title="Sobre este documento"
+              href="#"/>
+    <link rel="top" title="documentación de BitPHP - 1" href="index.html"/>
+        <link rel="next" title="Instalación" href="getstarted.html"/>
+        <link rel="prev" title="¡Bienvenido a la documentación de BitPHP!" href="index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="index.html" class="fa fa-home"> BitPHP</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">Acerca de bitphp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#filosofia">Filosofía</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#grandes-problemas-pequenas-soluciones"><em>&#8220;Grandes problemas, pequeñas soluciones&#8221;</em></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#caracteristicas">Características</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#micro-benchmark">Micro Benchmark</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#frameworks-usados">Frameworks usados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#slim">Slim</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#silex">Silex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bitphp">BitPHP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#resultados">Resultados</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#mvc-benchmark">MVC Benchmark</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id5">Frameworks usados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#codeigniter">CodeIgniter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">BitPHP</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getstarted.html">Instalación</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="getstarted.html#requisitos">Requisitos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted.html#linux">Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted.html#windows">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getstarted.html#el-archivo-de-configuracion">El archivo de configuración.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getstarted.html#tutorial-1-hello-world">Tutorial 1: Hello world</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="getstarted.html#saltar-a">Saltar a:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted.html#mvc-application">MVC Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted.html#hmvc-application">HMVC Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted.html#micro-mvc-application">Micro MVC Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getstarted.html#restful-application">RESTful Application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getstarted.html#notas-de-instalacion">Notas de instalación</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation-notes.html">Como instalar Apache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-notes.html#como-instalar-php">Como instalar PHP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-notes.html#como-instalar-mysql">Como instalar MySQL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-notes.html#todo-en-uno-xampp-windows">Todo en uno: XAMPP (Windows)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-notes.html#como-activar-mod-rewrite">Como activar mod_rewrite</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mvc-index.html">El servicio MVC/HMVC de BitPHP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvc-index.html#el-modelo">El modelo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc-index.html#el-controlador">El controlador</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc-index.html#las-vistas">Las vistas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc-index.html#como-implementa-mvc-bitphp">¿Como implementa MVC bitphp?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mvc-index.html#inicializando-aplicaciones-mvc">Inicializando aplicaciones MVC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvc-controllers.html">Controladores</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvc-controllers.html#estructura-de-un-controlador">Estructura de un controlador</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc-controllers.html#entrada-de-datos">Entrada de datos</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mvc-controllers.html#la-clase-bitcontroller">La clase BitController</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvc-views.html">Vistas</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvc-views.html#creando-una-vista-basica">Creando una vista basica</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc-views.html#la-variable-route">La variable $_ROUTE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc-views.html#motor-de-plantillas">Motor de plantillas</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mvc-models.html">Modelos</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvc-models.html#creando-un-modelo">Creando un modelo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc-models.html#conectando-con-la-base-de-datos">Conectando con la Base de Datos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc-models.html#el-uso-de-pdo">El uso de PDO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc-models.html#alias-para-las-bases-de-datos">Alias para las Bases de Datos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc-models.html#la-clase-crud">La clase CRUD</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mvc-modules.html">Modulos</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvc-modules.html#cargando-modulos">Cargando modulos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc-modules.html#auto-carga-de-modulos">Auto-carga de modulos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc-modules.html#modulos-disponibles">Modulos disponibles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc-modules.html#crea-tus-propios-modulos">Crea tus propios modulos</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mvc-errors.html">Manejo de errores</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hmvc.html">Aplicaciones HMVC</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hmvc.html#pasando-de-mvc-a-hmvc">Pasando de MVC a HMVC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hmvc.html#interaccion-entre-aplicaciones">Interacción entre aplicaciones</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mvc-tuto.html">Tutorial 2: Aplicación MVC simple.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvc-tuto.html#tutorial-3-aplicacion-hmvc-simple">Tutorial 3: Aplicación HMVC simple.</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="micro-index.html">Aplicaciones Micro MVC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="micro-routes.html">Creando rutas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="micro-input.html">Entrada de datos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="micro-template.html">Motor de plantillas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="micro-models.html">Usando modelos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="micro-modules.html">Usando modulos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="micro-extend.html">Extendiendo la aplicación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="micro-tuto.html">Tutorial 4: Aplicación MicroMVC</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="rest-index.html">Aplicaciones RestFUL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest-index.html#get">GET</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest-index.html#post">POST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest-index.html#put">PUT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest-index.html#delete">DELETE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest-index.html#formato-de-salida">Formato de salida</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest-tuto.html">Tutorial 5: Simple RestFUL API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="migration-index.html">Migración de aplicaciones</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="faqs.html">¿A que se refieren los <em>index</em> en MVC/HMVC?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faqs.html#que-es-el-entorno-de-produccion-desarrollo">¿Qué es el entorno de <em>producción/desarrollo</em>?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faqs.html#por-que-bitphp-no-loggea-los-errores">¿Por qué bitphp no loggea los errores?</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">BitPHP</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Acerca de bitphp</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/about.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="acerca-de-bitphp">
+<h1>Acerca de bitphp<a class="headerlink" href="#acerca-de-bitphp" title="Enlazar permanentemente con este título">¶</a></h1>
+<p>Algúnos frameworks son lo <em>bastante complejos</em> como para pasar horas , incluso días, aprendiendo a usarlos y a raíz de esto es qué surge <strong>bitphp</strong>, nuestra misión es crear un marco de trabajo óptimo en todos los aspectos, rápido en la ejecución, rápido en el desarrollo y, por supuesto, fácil de aprender.</p>
+</div>
+<div class="section" id="filosofia">
+<h1>Filosofía<a class="headerlink" href="#filosofia" title="Enlazar permanentemente con este título">¶</a></h1>
+<div class="section" id="grandes-problemas-pequenas-soluciones">
+<h2><em>&#8220;Grandes problemas, pequeñas soluciones&#8221;</em><a class="headerlink" href="#grandes-problemas-pequenas-soluciones" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Creemos firmemente qué no importa la complejidad del problema o necesidad qué debas resolver, todo puede, y debe, tener una solución sencilla y elegante.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+   <span class="nv">$myApp</span> <span class="o">=</span> <span class="nv">$bitphp</span><span class="o">-&gt;</span><span class="na">loadGreatApp</span><span class="p">();</span>
+   <span class="nv">$myApp</span><span class="o">-&gt;</span><span class="na">makeDreams</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="caracteristicas">
+<h1>Características<a class="headerlink" href="#caracteristicas" title="Enlazar permanentemente con este título">¶</a></h1>
+<ul class="simple">
+<li><strong>Soporte a diversas arquitecturas:</strong> (MVC/HMVC/Micro MVC/RestFUL Service).</li>
+<li><strong>Velocidad:</strong> la ejecución de bitphp es realmente rápida.</li>
+<li><strong>Ligereza:</strong> su núcleo tiene apenas unos cuantos KBytes</li>
+<li><strong>Minimalismo:</strong> nos esforzamos en lograr qué las aplicaciones puedan tener un código limpio y fácil de entender.</li>
+<li><strong>Naturaleza modular:</strong> se puede extender su funcionalidad fácilmente a través de la creación de módulos.</li>
+</ul>
+</div>
+<div class="section" id="micro-benchmark">
+<h1>Micro Benchmark<a class="headerlink" href="#micro-benchmark" title="Enlazar permanentemente con este título">¶</a></h1>
+<p>Se ha creado una prueba de rendimiento en la qué cada framework recibirá un parametro <strong>&#8220;nombre&#8221;</strong> y deberá imprimir un mensage <strong>&#8220;Hola $nombre&#8221;</strong>, para esta prueba se ha tomado en cuenta la velocidad de respuesta de cada framework.</p>
+<div class="section" id="frameworks-usados">
+<h2>Frameworks usados<a class="headerlink" href="#frameworks-usados" title="Enlazar permanentemente con este título">¶</a></h2>
+<ul class="simple">
+<li>Slim</li>
+<li>Silex</li>
+<li>BitPHP</li>
+</ul>
+<p>Ejecutando una prueba con 1000 conexiones a 5 concurrentes.</p>
+</div>
+<div class="section" id="slim">
+<h2>Slim<a class="headerlink" href="#slim" title="Enlazar permanentemente con este título">¶</a></h2>
+<div class="section" id="codigo">
+<h3>Código<a class="headerlink" href="#codigo" title="Enlazar permanentemente con este título">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+   <span class="k">require</span> <span class="s1">&#39;Slim/Slim.php&#39;</span><span class="p">;</span>
+   <span class="nx">\Slim\Slim</span><span class="o">::</span><span class="na">registerAutoloader</span><span class="p">();</span>
+   <span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Slim\Slim</span><span class="p">();</span>
+
+   <span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/hello/:name&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$name</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">echo</span> <span class="s2">&quot;Hola </span><span class="si">$name</span><span class="s2">!&quot;</span><span class="p">;</span>
+   <span class="p">});</span>
+
+   <span class="nv">$app</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">();</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="resultado">
+<h3>Resultado<a class="headerlink" href="#resultado" title="Enlazar permanentemente con este título">¶</a></h3>
+<div class="code highlight-python"><div class="highlight"><pre>ab -H &quot;Connection:close&quot; -n 1000 -c 5 http://localhost/benchmark/slim/hello/Mundo
+This is ApacheBench, Version 2.3 &lt;$Revision: 1528965 $&gt;
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+Completed 100 requests
+Completed 200 requests
+Completed 300 requests
+Completed 400 requests
+Completed 500 requests
+Completed 600 requests
+Completed 700 requests
+Completed 800 requests
+Completed 900 requests
+Completed 1000 requests
+Finished 1000 requests
+
+
+Server Software:        Apache/2.4.7
+Server Hostname:        localhost
+Server Port:            80
+
+Document Path:          /benchmark/slim/hello/Mundo
+Document Length:        21 bytes
+
+Concurrency Level:      5
+Time taken for tests:   0.574 seconds
+Complete requests:      1000
+Failed requests:        0
+Total transferred:      198000 bytes
+HTML transferred:       11000 bytes
+Requests per second:    1743.42 [#/sec] (mean)
+Time per request:       2.868 [ms] (mean)
+Time per request:       0.574 [ms] (mean, across all concurrent requests)
+Transfer rate:          337.11 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.0      0       0
+Processing:     1    3   1.4      2      10
+Waiting:        1    3   1.3      2      10
+Total:          1    3   1.4      2      10
+
+Percentage of the requests served within a certain time (ms)
+  50%      2
+  66%      3
+  75%      4
+  80%      4
+  90%      5
+  95%      5
+  98%      7
+  99%      8
+ 100%     10 (longest request)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="silex">
+<h2>Silex<a class="headerlink" href="#silex" title="Enlazar permanentemente con este título">¶</a></h2>
+<div class="section" id="id1">
+<h3>Código<a class="headerlink" href="#id1" title="Enlazar permanentemente con este título">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+   <span class="k">require_once</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/../vendor/autoload.php&#39;</span><span class="p">;</span>
+
+   <span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Silex\Application</span><span class="p">();</span>
+
+   <span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/hello/{name}&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span> <span class="k">use</span><span class="p">(</span><span class="nv">$app</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="s2">&quot;Hello </span><span class="si">$name</span><span class="s2">!&quot;</span><span class="p">;</span>
+   <span class="p">});</span>
+
+   <span class="nv">$app</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">();</span>
+
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>Resultado<a class="headerlink" href="#id2" title="Enlazar permanentemente con este título">¶</a></h3>
+<div class="code highlight-python"><div class="highlight"><pre>ab -n 1000 -c 5 http://localhost/benchmark/silex/hello/Mundo
+This is ApacheBench, Version 2.3 &lt;$Revision: 1528965 $&gt;
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+Completed 100 requests
+Completed 200 requests
+Completed 300 requests
+Completed 400 requests
+Completed 500 requests
+Completed 600 requests
+Completed 700 requests
+Completed 800 requests
+Completed 900 requests
+Completed 1000 requests
+Finished 1000 requests
+
+
+Server Software:        Apache/2.4.7
+Server Hostname:        localhost
+Server Port:            80
+
+Document Path:          /benchmark/silex/hello/Mundo
+Document Length:        11 bytes
+
+Concurrency Level:      5
+Time taken for tests:   1.372 seconds
+Complete requests:      1000
+Failed requests:        0
+Total transferred:      288000 bytes
+HTML transferred:       11000 bytes
+Requests per second:    728.61 [#/sec] (mean)
+Time per request:       6.862 [ms] (mean)
+Time per request:       1.372 [ms] (mean, across all concurrent requests)
+Transfer rate:          204.92 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.2      0       3
+Processing:     3    7   3.5      5      43
+Waiting:        2    6   3.0      5      39
+Total:          3    7   3.5      6      43
+
+Percentage of the requests served within a certain time (ms)
+  50%      6
+  66%      7
+  75%      8
+  80%      9
+  90%     11
+  95%     13
+  98%     16
+  99%     18
+ 100%     43 (longest request)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="bitphp">
+<h2>BitPHP<a class="headerlink" href="#bitphp" title="Enlazar permanentemente con este título">¶</a></h2>
+<div class="section" id="id3">
+<h3>Código<a class="headerlink" href="#id3" title="Enlazar permanentemente con este título">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span> <span class="k">require</span><span class="p">(</span> <span class="s1">&#39;core/bit.php&#39;</span> <span class="p">);</span>
+
+   <span class="nv">$myApp</span> <span class="o">=</span> <span class="nv">$bitphp</span><span class="o">-&gt;</span><span class="na">loadMicroServer</span><span class="p">();</span>
+
+   <span class="nv">$myApp</span><span class="o">-&gt;</span><span class="na">route</span><span class="p">(</span><span class="s1">&#39;/hello/:word&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span> <span class="nv">$name</span> <span class="p">)</span> <span class="p">{</span>
+      <span class="k">echo</span> <span class="s2">&quot;Hola </span><span class="si">$name</span><span class="s2">!&quot;</span><span class="p">;</span>
+   <span class="p">});</span>
+
+   <span class="nv">$myApp</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">();</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3>Resultado<a class="headerlink" href="#id4" title="Enlazar permanentemente con este título">¶</a></h3>
+<div class="code highlight-python"><div class="highlight"><pre>$ ab -n 1000 -c 5 http://localhost/benchmark/bitphp/hello/Mundo
+This is ApacheBench, Version 2.3 &lt;$Revision: 1528965 $&gt;
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+Completed 100 requests
+Completed 200 requests
+Completed 300 requests
+Completed 400 requests
+Completed 500 requests
+Completed 600 requests
+Completed 700 requests
+Completed 800 requests
+Completed 900 requests
+Completed 1000 requests
+Finished 1000 requests
+
+
+Server Software:        Apache/2.4.7
+Server Hostname:        localhost
+Server Port:            80
+
+Document Path:          /benchmark/bitphp/hello/Mundo
+Document Length:        21 bytes
+
+Concurrency Level:      5
+Time taken for tests:   0.222 seconds
+Complete requests:      1000
+Failed requests:        0
+Total transferred:      208000 bytes
+HTML transferred:       21000 bytes
+Requests per second:    4509.30 [#/sec] (mean)
+Time per request:       1.109 [ms] (mean)
+Time per request:       0.222 [ms] (mean, across all concurrent requests)
+Transfer rate:          915.95 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.0      0       0
+Processing:     0    1   0.5      1       4
+Waiting:        0    1   0.5      1       4
+Total:          0    1   0.6      1       4
+
+Percentage of the requests served within a certain time (ms)
+  50%      1
+  66%      1
+  75%      1
+  80%      1
+  90%      2
+  95%      2
+  98%      3
+  99%      3
+ 100%      4 (longest request)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="resultados">
+<h2>Resultados<a class="headerlink" href="#resultados" title="Enlazar permanentemente con este título">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="41%" />
+<col width="36%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Framework</th>
+<th class="head">Peticiones por segundo</th>
+<th class="head">Tiempo por petición</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Slim</td>
+<td>1743.42 [#/sec]</td>
+<td>2.868 [ms]</td>
+</tr>
+<tr class="row-odd"><td>Silex</td>
+<td>728.61 [#/sec]</td>
+<td>6.862 [ms]</td>
+</tr>
+<tr class="row-even"><td>BitPHP</td>
+<td>4509.30 [#/sec]</td>
+<td>1.109 [ms]</td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><em>Peticiones por segundo: entre más, mejor.</em></li>
+<li><em>Tiempo por petición: entre menos, mejor.</em></li>
+</ul>
+</div>
+</div>
+<div class="section" id="mvc-benchmark">
+<h1>MVC Benchmark<a class="headerlink" href="#mvc-benchmark" title="Enlazar permanentemente con este título">¶</a></h1>
+<div class="section" id="id5">
+<h2>Frameworks usados<a class="headerlink" href="#id5" title="Enlazar permanentemente con este título">¶</a></h2>
+<ul class="simple">
+<li>CodeIgniter</li>
+</ul>
+</div>
+<div class="section" id="codeigniter">
+<h2>CodeIgniter<a class="headerlink" href="#codeigniter" title="Enlazar permanentemente con este título">¶</a></h2>
+<div class="section" id="codigo-del-controlador">
+<h3>Código del controlador<a class="headerlink" href="#codigo-del-controlador" title="Enlazar permanentemente con este título">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+   <span class="k">class</span> <span class="nc">Hello</span> <span class="k">extends</span> <span class="nx">CI_Controller</span> <span class="p">{</span>
+
+      <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+      <span class="p">{</span>
+         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="s1">&#39;hello_message&#39;</span><span class="p">);</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3>Resultado<a class="headerlink" href="#id6" title="Enlazar permanentemente con este título">¶</a></h3>
+<div class="code highlight-python"><div class="highlight"><pre>$ ab -n 2000 -c 10 http://localhost/benchmark2/codeigniter/index.php/hello
+This is ApacheBench, Version 2.3 &lt;$Revision: 1528965 $&gt;
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+Completed 200 requests
+Completed 400 requests
+Completed 600 requests
+Completed 800 requests
+Completed 1000 requests
+Completed 1200 requests
+Completed 1400 requests
+Completed 1600 requests
+Completed 1800 requests
+Completed 2000 requests
+Finished 2000 requests
+
+
+Server Software:        Apache/2.4.7
+Server Hostname:        localhost
+Server Port:            80
+
+Document Path:          /benchmark2/codeigniter/index.php/hello
+Document Length:        21 bytes
+
+Concurrency Level:      10
+Time taken for tests:   1.138 seconds
+Complete requests:      2000
+Failed requests:        0
+Total transferred:      416000 bytes
+HTML transferred:       42000 bytes
+Requests per second:    1757.96 [#/sec] (mean)
+Time per request:       5.688 [ms] (mean)
+Time per request:       0.569 [ms] (mean, across all concurrent requests)
+Transfer rate:          357.09 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.1      0       2
+Processing:     1    6   3.8      5      29
+Waiting:        0    5   3.8      4      29
+Total:          1    6   3.8      5      31
+
+Percentage of the requests served within a certain time (ms)
+  50%      5
+  66%      7
+  75%      8
+  80%      9
+  90%     11
+  95%     13
+  98%     16
+  99%     17
+ 100%     31 (longest request)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>BitPHP<a class="headerlink" href="#id7" title="Enlazar permanentemente con este título">¶</a></h2>
+<div class="section" id="id8">
+<h3>Código del controlador<a class="headerlink" href="#id8" title="Enlazar permanentemente con este título">¶</a></h3>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="k">use</span> <span class="nx">\BitPHP\Mvc\Load</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Hello</span> <span class="p">{</span>
+   <span class="k">public</span> <span class="k">function</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">Load</span><span class="o">::</span><span class="na">view</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">);</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3>Resultado<a class="headerlink" href="#id9" title="Enlazar permanentemente con este título">¶</a></h3>
+<div class="code highlight-python"><div class="highlight"><pre>$ ab -n 2000 -c 10 http://localhost/benchmark2/bitphp/hello
+ This is ApacheBench, Version 2.3 &lt;$Revision: 1528965 $&gt;
+ Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+ Licensed to The Apache Software Foundation, http://www.apache.org/
+
+ Benchmarking localhost (be patient)
+ Completed 200 requests
+ Completed 400 requests
+ Completed 600 requests
+ Completed 800 requests
+ Completed 1000 requests
+ Completed 1200 requests
+ Completed 1400 requests
+ Completed 1600 requests
+ Completed 1800 requests
+ Completed 2000 requests
+ Finished 2000 requests
+
+
+ Server Software:        Apache/2.4.7
+ Server Hostname:        localhost
+ Server Port:            80
+
+ Document Path:          /benchmark2/bitphp/hello
+ Document Length:        21 bytes
+
+ Concurrency Level:      10
+ Time taken for tests:   0.568 seconds
+ Complete requests:      2000
+ Failed requests:        0
+ Total transferred:      416000 bytes
+ HTML transferred:       42000 bytes
+ Requests per second:    3520.17 [#/sec] (mean)
+ Time per request:       2.841 [ms] (mean)
+ Time per request:       0.284 [ms] (mean, across all concurrent requests)
+ Transfer rate:          715.03 [Kbytes/sec] received
+
+ Connection Times (ms)
+               min  mean[+/-sd] median   max
+ Connect:        0    0   0.1      0       1
+ Processing:     0    3   1.9      2      19
+ Waiting:        0    3   1.8      2      16
+ Total:          1    3   1.9      2      19
+
+ Percentage of the requests served within a certain time (ms)
+   50%      2
+   66%      3
+   75%      4
+   80%      4
+   90%      5
+   95%      6
+   98%      8
+   99%      9
+ 100%     19 (longest request)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="getstarted.html" class="btn btn-neutral float-right" title="Instalación">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="¡Bienvenido a la documentación de BitPHP!"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Root404 Co.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/translations.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
