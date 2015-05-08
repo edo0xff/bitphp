@@ -13,66 +13,65 @@
     *	developed in previous versions.</p>
     *
     *	@global string $_URLPARAMS this variable contains url parameters
-    *	@param string $i index of $_params to search
+    *	@param string $index index of $_params to search
     *	@param boolean $html_filter optional param, indicates whether to filter html chars, true by default
     *	@return string
     */
-    public function urlParam($i, $html_filter = true)
+    public function urlParam($index, $html_filter = true)
     {
       global $bitphp;
       $_ROUTE = $bitphp->route;
 
-      if( is_numeric($i) ) { 
-        $i += ( $bitphp->getProperty('hmvc') ) ? 3 : 2 ;
-        $s = isset($_ROUTE['URL'][$i]) && $_ROUTE['URL'][$i] !== '' ? $_ROUTE['URL'][$i] : null;
+      if( is_numeric($index) ) { 
+        $index += ( $bitphp->getProperty('hmvc') ) ? 3 : 2 ;
+        $string = isset($_ROUTE['URL'][$index]) && $_ROUTE['URL'][$index] !== '' ? $_ROUTE['URL'][$index] : null;
       } else {
-        $i = array_search($i, $_ROUTE['URL']);
-        $s = ($i !== false) ? $_ROUTE['URL'][$i + 1] : null ;
+        $index = array_search($index, $_ROUTE['URL']);
+        $string = ($index !== false) ? $_ROUTE['URL'][$index + 1] : null ;
       }
     
-      return $html_filter ? htmlentities($s, ENT_QUOTES) : $s;
+      return $html_filter && $string !== null ? htmlentities($string, ENT_QUOTES) : $string;
     }
 
     /**
     *	Gets the value of the specified key in $_POST, and filters
     *	html chars, return null if key isn't set.
     *
-    *	@param string $k index of $_POST to search
+    *	@param string $index index of $_POST to search
     *	@param boolean $html_filter optional param, indicates whether to filter html chars, true by default
     *	@return string
     */
-    public function post($k, $html_filter = true)
+    public function post($index, $html_filter = true)
     {
-      $s = isset($_POST[$k]) && $_POST[$k] !== '' ? $_POST[$k] : null;
-      return $html_filter ? htmlentities($s, ENT_QUOTES) : $s;
+      $string = isset($_POST[$index]) && $_POST[$index] !== '' ? $_POST[$index] : null;
+      return $html_filter && $string !== null ? htmlentities($string, ENT_QUOTES) : $string;
     }
 
     /**
     *	Gets the value of the specified key in $_GET, and filters
     *	html chars, return null if key isn't set.
     *
-    *	@param string $k index of $_GET to search
+    *	@param string $index index of $_GET to search
     *	@param boolean $html_filter optional param, indicates whether to filter html chars, true by default
     *	@return string
     */
-    public function get($k, $html_filter = true)
+    public function get($index, $html_filter = true)
     {
-      $s = isset($_GET[$k]) && $_GET[$k] !== '' ? $_GET[$k] : null;
-      return $html_filter ? htmlentities($s, ENT_QUOTES) : $s;
+      $string = isset($_GET[$index]) && $_GET[$index] !== '' ? $_GET[$index] : null;
+      return $html_filter && $string !== null ? htmlentities($string, ENT_QUOTES) : $string;
     }
 
     /**
     *	Gets the value of the specified key in $_COOKIE, and filters
     *	html chars, return null if key isn't set.
     *
-    *	@param string $k index of $_COOKIE to search
+    *	@param string $index index of $_COOKIE to search
     *	@param boolean $html_filter optional param, indicates whether to filter html chars, true by default
     *	@return string
     */
-    public function cookie($k, $html_filter = true)
+    public function cookie($index, $html_filter = true)
     {
-      $s = isset($_COOKIE[$k]) && $_COOKIE[$k] !== '' ? $_COOKIE[$k] : null;
-      return $html_filter ? htmlentities($s, ENT_QUOTES) : $s;
+      $string = isset($_COOKIE[$index]) && $_COOKIE[$index] !== '' ? $_COOKIE[$index] : null;
+      return $html_filter && $string !== null ? htmlentities($string, ENT_QUOTES) : $string;
     }
   }
-?>

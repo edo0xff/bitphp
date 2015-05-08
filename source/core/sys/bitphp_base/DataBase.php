@@ -16,7 +16,7 @@
     *	@return object
     *	@todo modified to other controllers database and charset, mysql and utf8 by default
     */
-    public static function driver($dbname, $params = Null) {
+    public function driver($dbname, $params = Null) {
       global $bitphp;
 
       $dbname = explode( ':', $dbname);
@@ -45,4 +45,3 @@
       }
     }
   }
-?>

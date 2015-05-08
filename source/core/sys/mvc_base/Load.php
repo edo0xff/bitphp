@@ -52,14 +52,20 @@
     *	@param string $_name Name of the module to be loaded, without extension.
     *	@return void
     */
-    public function module( $_name, $_register_as = null ) {
+    public function module( $_name, $_register_as = null, $_contruct_parameters = null ) {
       global $bitphp;
       $_file = 'core/modules/'. $_name .'.php';
 
       if( file_exists( $_file ) ){
           require_once( $_file );
+          $module_obj = new $_name( $_contruct_parameters );
+
+          if( $bitphp->controller === null ) { return $module_obj; }
+
+          if( $_register_as === false ) { return 0; }
+
           $_register_as = $_register_as ? $_register_as : strtolower( $_name ) ;
-          $bitphp->controller->$_register_as = new $_name();
+          $bitphp->controller->$_register_as = $module_obj;
       }	else {
         $_d = 'El modulo <b>'.$_name.'</b> no se pudo cargar.';
         $_c = 'El fichero <b>'.$_file.'</b> no existe.';
@@ -88,9 +94,7 @@
       $_CONTROLLER = $bitphp->route['APP_CONTROLLER'];
       $_ACCTION = $bitphp->route['APP_ACCTION'];
 
-      if( !$echo ) {
-        ob_start();
-      }
+      if( !$echo ) { ob_start(); }
 
       $bitphp->controller = self::controller( $_CONTROLLER, $_ACCTION );
       self::auto();
@@ -138,14 +142,19 @@
     *	@param string $_name Name of the model to be loaded, without extension.
     *	@return object
     */
-    public function model( $_name ) {
+    public function model( $_name, $_register_as = null ) {
       global $bitphp;
       $_ROUTE = $bitphp->route;
 
       $_file = $_ROUTE['APP_PATH'] .'/models/'.$_name.'.php';
       try {
         self::include_file($_file, $_name);
-        return new $_name();
+        $model_obj = new $_name();
+
+        if( $bitphp->controller === null ) { return $model_obj; }
+
+        $_register_as = $_register_as ? $_register_as : strtolower( $_name ) ;
+        $bitphp->controller->$_register_as = $model_obj;
       } catch(Exception $_e) {
         $_d = 'El modelo <b>'.$_name.'</b> no se pudo cargar.';
         $_c = $_e->getMessage();
@@ -183,4 +192,3 @@
     }
 
   }
-?>

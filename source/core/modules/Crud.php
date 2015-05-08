@@ -6,7 +6,7 @@
 	/**
   	*	@author Eduardo B <ms7rbeta@gmail.com>
   	*/
-	class Crud extends DataBase {
+	class Crud {
 
 		private $db = null;
 		private $table_name = null;
@@ -17,8 +17,8 @@
 		public $stmt = null;
 		public $error = null;
 
-		public function db( $dbname ) {
-			$this->db = self::driver( $dbname );
+		public function dataBase( $dbname ) {
+			$this->db = DataBase::driver( $dbname );
 			return $this;
 		}
 
@@ -26,9 +26,9 @@
 			
 			if( !$this->db ) { 
 
-				$m = 'Error al seleccionar la tabla.';
-				$e = 'No puede ser usada antes de inicializar la base de datos <b>Crud::db</b>.';
-				$bitphp->error->trace( $m, $e );
+				$message = 'Error al seleccionar la tabla.';
+				$exception = 'No puede ser usada antes de inicializar la base de datos <b>Crud::db</b>.';
+				$bitphp->error->trace( $message, $exception );
 			}
 
 			$this->table_name = $table_name;
@@ -41,9 +41,9 @@
 
 			if( !$this->table_name ) { 
 
-				$m = 'Error al ejecutar sentencia <b>Crud::insert</b>.';
-				$e = 'No puede ser usada antes de inicializar la tabla <b>Crud::table</b>.';
-				$bitphp->error->trace( $m, $e );
+				$message = 'Error al ejecutar sentencia <b>Crud::insert</b>.';
+				$exception = 'No puede ser usada antes de inicializar la tabla <b>Crud::table</b>.';
+				$bitphp->error->trace( $message, $exception );
 			}
 
 			$this->initialized_query = 'insert';
@@ -54,7 +54,7 @@
 
 			foreach ($q as $key => $value) {
 				$keys[$i] = $key;
-				$values[$i] = self::sanatize( $value );
+				$values[$i] = "'$value'";
 				$i++;
 			}
 
@@ -69,9 +69,9 @@
 
 			if( !$this->table_name ) { 
 
-				$m = 'Error al ejecutar sentencia <b>Crud::select</b>.';
-				$e = 'No puede ser usada antes de inicializar la tabla <b>Crud::table</b>.';
-				$bitphp->error->trace( $m, $e );
+				$message = 'Error al ejecutar sentencia <b>Crud::select</b>.';
+				$exception = 'No puede ser usada antes de inicializar la tabla <b>Crud::table</b>.';
+				$bitphp->error->trace( $message, $exception );
 			}
 
 			$this->initialized_query = 'select';
@@ -85,9 +85,9 @@
 
 			if( !$this->table_name ) { 
 
-				$m = 'Error al ejecutar sentencia <b>Crud::update</b>.';
-				$e = 'No puede ser usada antes de inicializar la tabla <b>Crud::table</b>.';
-				$bitphp->error->trace( $m, $e );
+				$message = 'Error al ejecutar sentencia <b>Crud::update</b>.';
+				$exception = 'No puede ser usada antes de inicializar la tabla <b>Crud::table</b>.';
+				$bitphp->error->trace( $message, $exception );
 			}
 
 			$this->initialized_query = 'update';
@@ -96,7 +96,7 @@
 			$i = 0;
 
 			foreach ($q as $key => $value) {
-				$values[$i] = $key . '=' . self::sanatize( $value );
+				$values[$i] = $key . "='$value'";
 				$i++;
 			}
 
@@ -110,9 +110,9 @@
 
 			if( !$this->table_name ) { 
 
-				$m = 'Error al ejecutar sentencia <b>Crud::delete</b>.';
-				$e = 'No puede ser usada antes de inicializar la tabla <b>Crud::table</b>.';
-				$bitphp->error->trace( $m, $e );
+				$message = 'Error al ejecutar sentencia <b>Crud::delete</b>.';
+				$exception = 'No puede ser usada antes de inicializar la tabla <b>Crud::table</b>.';
+				$bitphp->error->trace( $message, $exception );
 			}
 
 			$this->initialized_query = 'delete';
@@ -121,37 +121,47 @@
 			return $this;
 		}
 
+		/* where */
+
+		private function exctractConditionOperator( $condition ) {
+			$vars = explode(':', $condition);
+			if ( count($vars) > 1 ) {
+				$this->string .= " $vars[0] ";
+				return $vars[1];
+			} else {
+				return $vars[0];
+			}
+		}
+
+		private function conditionParse( $vars_array, $values ) {
+			$vars_len = count( $vars_array );
+			$vars_values = array();
+
+   			for( $i = 0; $i < $vars_len; $i++ ) {
+	      		$var = trim( $vars_array[$i] );
+      			$vars_values[$i] = '( ' . str_replace( [':is:',':are:'], [$var,$var], $values) . ' )';
+   			}
+
+   			return $vars_values;
+		}
+
 		public function where( $q ) {
 			global $bitphp;
 
 			if( !$this->string  ) {
-				$m = 'Error al ejecutar sentencia <b>Crud::where</b>.';
-				$e = 'Ninguna consulta a sido inicializada <b>Crud::select, Crud::update, Crud::delete</b>.';
-				$bitphp->error->trace( $m, $e );
+				$message = 'Error al ejecutar sentencia <b>Crud::where</b>.';
+				$exception = 'Ninguna consulta a sido inicializada <b>Crud::select, Crud::update, Crud::delete</b>.';
+				$bitphp->error->trace( $message, $exception );
 			}
 
 			$this->string .= ' WHERE ';
 
 			foreach ($q as $vars => $values) {
 
-				$vars = explode(':', $vars);
-				if ( count($vars) > 1 ) {
-					$this->string .= " $vars[0] ";
-					$vars = $vars[1];
-				} else {
-					$vars = $vars[0];
-				}
-
-				$vars_array = preg_split('/( AND | OR )/i', $vars);
-   				$vars_len = count( $vars_array );
-   				$var_values = array();
-
-   				for( $i = 0; $i< $vars_len; $i++ ) {
-	      			$var = trim( $vars_array[$i] );
-      				$var_values[$i] = '( ' . str_replace( [':is:',':are:'], [$var,$var], $values) . ' )';
-   				}
-
-   				$vars = str_replace( $vars_array, $var_values, $vars);
+				$vars = $this->exctractConditionOperator( $vars );
+				$vars_array = $vars_array = preg_split('/( AND | OR )/i', $vars);
+				$vars_values = $this->conditionParse( $vars_array, $values );
+   				$vars = str_replace( $vars_array, $vars_values, $vars);
    				$this->string .= "( $vars )";
 			}
 
@@ -162,9 +172,9 @@
 			global $bitphp;
 
 			if( $this->initialized_query != 'select' ) {
-				$m = 'Error al ejecutar sentencia <b>Crud::limit</b>.';
-				$e = 'No se a inicializado ninguna consulta <b>Crud::select</b>.';
-				$bitphp->error->trace( $m, $e );
+				$message = 'Error al ejecutar sentencia <b>Crud::limit</b>.';
+				$exception = 'No se a inicializado ninguna consulta <b>Crud::select</b>.';
+				$bitphp->error->trace( $message, $exception );
 			}
 
 			$l_value = $r ? $l : 0;
@@ -178,58 +188,22 @@
 			global $bitphp;
 
 			if( $this->initialized_query != 'select' ) {
-				$m = 'Error al ejecutar sentencia <b>Crud::order</b>.';
-				$e = 'No se a inicializado ninguna consulta <b>Crud::select</b>.';
-				$bitphp->error->trace( $m, $e );
+				$message = 'Error al ejecutar sentencia <b>Crud::order</b>.';
+				$exception = 'No se a inicializado ninguna consulta <b>Crud::select</b>.';
+				$bitphp->error->trace( $message, $exception );
 			}
 
 			$this->string .= " ORDER BY $key " . ( $mode == 'up' ? 'ASC' : 'DESC' );
 			return $this;
 		}
 
-		public function count() {
-			global $bitphp;
-
-			if( $this->executed_query != 'select' ) {
-				$m = 'Error al enumerar los resultados de la consulta.';
-				$e = 'Ninguna sentencia <b>Crud::select</b> ha sido ejecutada: <b>Crud::execute</b>.';
-				$bitphp->error->trace( $m, $e );
-			}
-
-			return $this->error ? false : $this->stmt->rowCount();
-		}
-
-		public function first() {
-			global $bitphp;
-
-			if( $this->executed_query != 'select' ) {
-				$m = 'Error al extraer el primer resultado de la consulta.';
-				$e = 'Ninguna sentencia <b>Crud::select</b> ha sido ejecutada: <b>Crud::execute</b>.';
-				$bitphp->error->trace( $m, $e );
-			}
-
-			return $this->error ? false : $this->result()[0];
-		}
-
-		public function last() {
-			global $bitphp;
-
-			if( $this->executed_query != 'select' ) {
-				$m = 'Error al extraer el ultimo resultado de la consulta.';
-				$e = 'Ninguna sentencia <b>Crud::select</b> ha sido ejecutada: <b>Crud::execute</b>.';
-				$bitphp->error->trace( $m, $e );
-			}
-
-			return $this->error ? false : $this->result()[$this->stmt->rowCount() - 1];
-		}
-
 		public function result() {
 			global $bitphp;
 
 			if( $this->result === null ) {
-				$m = 'Error al mostrar los resultados de la consulta.';
-				$e = 'Ninguna sentencia ha sido ejecutada: <b>Crud::execute</b>.';
-				$bitphp->error->trace( $m, $e );
+				$message = 'Error al mostrar los resultados de la consulta.';
+				$exception = 'Ninguna sentencia ha sido ejecutada: <b>Crud::execute</b>.';
+				$bitphp->error->trace( $message, $exception );
 			}
 
 			return $this->result;
@@ -261,4 +235,3 @@
 			return $this;
 		}
 	}
-?>

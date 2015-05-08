@@ -1,2 +1,0 @@
-Motor de plantillas
-===================

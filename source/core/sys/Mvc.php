@@ -19,10 +19,10 @@
       $controller = $bitphp->route['APP_CONTROLLER'];
       $acction = $bitphp->route['APP_ACCTION'];
 
+      $bitphp->controller = null;
   		$bitphp->controller = Load::controller( $controller, $acction );
       
       Load::auto();
       $bitphp->controller->$acction();
 		}
-  }	
-?>
+  }

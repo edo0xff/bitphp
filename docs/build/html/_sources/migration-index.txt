@@ -1,2 +1,0 @@
-Migración de aplicaciones
-=========================

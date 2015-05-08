@@ -26,4 +26,3 @@
 			$bitphp->route = $_ROUTE;
 		}
 	}
-?>

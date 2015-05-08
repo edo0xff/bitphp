@@ -39,4 +39,3 @@
             return $time_ago;
         }
     }
-?>

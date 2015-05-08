@@ -1,2 +1,0 @@
-Extendiendo la aplicación
-=========================

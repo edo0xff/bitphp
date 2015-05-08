@@ -1,2 +1,0 @@
-Manejo de errores
-=================

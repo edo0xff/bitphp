@@ -1,2 +1,0 @@
-Aplicaciones Micro MVC
-======================

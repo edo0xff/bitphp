@@ -6,9 +6,9 @@
 			global $bitphp;
 
 			if( !is_dir( $app ) ) {
-				$d = 'Oops! hubo un problema al ejecutar la aplicacion.';
-				$e = 'La carpeta de la aplicacion <b>/'. $app .'/</b> no existe.';
-				$bitphp->error->trace($d, $e, false);
+				$description = 'Oops! hubo un problema al ejecutar la aplicacion.';
+				$exception = 'La carpeta de la aplicacion <b>/'. $app .'/</b> no existe.';
+				$bitphp->error->trace($description, $exception, false);
 			}
 
 			return $app;
@@ -63,4 +63,3 @@
 			return $_ROUTE;
 		}
 	}
-?>

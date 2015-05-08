@@ -17,4 +17,3 @@
 			$this->error = $bitphp->error;
 		}
 	}
-?>

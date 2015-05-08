@@ -5,6 +5,12 @@
   */
 	class InputValidate extends Input {
 
+    //Error codes
+    const PASS_DONT_MATCH = 445;
+    const PASS_ISNT_SECURE = 446;
+    const IS_NOT_EMAIL = 235;
+    const IS_NOT_NUMERIC = 237;
+
   /**
     * Gets the value of the specified index in the specified method.
     * if method is null, returns $key
@@ -17,23 +23,23 @@
     {
       switch(strtoupper($m)) {
         case 'POST':
-          $s = self::post($k, $f);
+          $string = self::post($k, $f);
           break;
         case 'GET':
-          $s = self::get($k, $f);
+          $string = self::get($k, $f);
           break;
         case 'COOKIE':
-          $s = self::cookie($k, $f);
+          $string = self::cookie($k, $f);
           break;
         case 'URL_PARAM':
-          $s = self::getUrlValue($k, $f);
+          $string = self::urlParam($k, $f);
           break;
         case null:
-          $s = $k;
+          $string = $k;
           break;
       }
 
-      return $s;
+      return $string;
     }
 
 	/**
@@ -49,15 +55,16 @@
     */
     public static function pass($m, $k, $cryp = true, $hash = 'sha256')
     {
-      $s1 = self::getValue($m, $k[0]);
-      $s2 = self::getValue($m, $k[1]);
+      $string1 = self::getValue($m, $k[0]);
+      $string2 = self::getValue($m, $k[1]);
+      
+      if($string1 === null || $string2 === null){ return null; }
+      if($string1 != $string2) { return 445; }
 
-      if($s1 != $s2){ return null; }
+      $match = preg_match("/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/", $string1);
+      if(!$match){ return 446; }
 
-      $match = preg_match("/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/", $s1);
-      if(!$match){ return null; }
-
-      return $cryp ? hash($hash, $s1) : $s1;
+      return $cryp ? hash($hash, $string1) : $string1;
     }
 
     /**
@@ -69,12 +76,12 @@
     */
     public static function email($m, $k)
     {
-      $s = self::getValue($m, $k);
+      $string = self::getValue($m, $k);
 
-      if(!$s){ return null; }
+      if($string === null){ return null; }
 
-      $match = preg_match('/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/',$s);
-      return $match ? $s : null;
+      $match = preg_match('/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/',$string);
+      return $match ? $string : 235;
     }
 
     /**
@@ -88,63 +95,20 @@
     */
     public static function number($m, $k, $t = null)
     {
-      $s = self::getValue($m, $k);
-      if( $s === null ){ return false; }
+      $string = self::getValue($m, $k);
+      if( $string === null ){ return null; }
 
-      if(is_numeric($s)) {
+      if(is_numeric($string)) {
         switch(strtoupper($t)) {
           case 'INT':
-            return intval($s);
+            return intval($string);
           case 'FLOAT':
-            return floatval($s);
+            return floatval($string);
           case null:
-            return $s;
+            return $string;
         }
       } else {
-        return false;
+        return 237;
       }
     }
-
-    /**
-    *	Gets a value of index specified method, and valid length.
-    *
-    *	@param string $m method to search (POST, GET, COOKIE, (and URLPARAMS in bitphp))
-    *	@param string $k key to search in the method
-    *	@param integer $max_len maximum number of characters allowed
-    *	@param integer $min_len minimum number of characters allowed
-    *	@return string
-    */
-    public static function large_as($m, $k, $max_len = 1024, $min_len = 1)
-    {
-      $s = self::getValue($m, $k);
-
-      if(!$s){ return null; }
-
-      $s = strlen($s) < $max_len ? $s : null;
-      if(!$s){ return null; }
-
-      $s = strlen($s) >= $min_len ? $s : null;
-      if(!$s){ return null; }
-
-      return $s;
-    }
-
-    /**
-    *	Gets a pre-formated-text, eg. from any textarea, scape '\n' to '&#60;br&#62;'
-    *
-    *	also use this function to get supported strings with <b>json_encode()</b>
-    *
-    *	@param string $m method to search (POST, GET, COOKIE, (and URLPARAMS in bitphp))
-    *	@param string $k key to search in the method
-    *	@return string
-    */
-    public static function pre($m, $k, $f = true) {
-      $s = self::getValue($m, $k, $f);
-
-      if(!$s){ return null; }
-
-      $s = str_replace("\n", "<br>", $s);
-      return $s;
-    }
 	}
-?>

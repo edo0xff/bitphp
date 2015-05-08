@@ -1,1 +1,1 @@
-<?php  require( 'core/bit.php' ); ?>
+<?php  require( 'core/bit.php' );
