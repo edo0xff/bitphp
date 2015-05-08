@@ -14,51 +14,76 @@
 			return $app;
 		}
 
+		private function getBasePath() {
+			global $bitphp;
+			$path = $bitphp->getEnviromentProperty('base_path');
+			$len = strlen( $path ) - 1;
+      			$path = ( $path[ $len ] == '/' ) ? substr( $path, 0, $len) : $path ;
+      			return $path;
+		}
+
+		private function getUrl( $route ) {
+			//URL array
+			if ( !$route ) {
+				$url =  empty($_GET['_route']) ? array() : explode('/', $_GET['_route']);
+			} else {
+				$url = explode('/', $route);
+			}
+			return $url;
+		}
+
+		private function getAppPath( $url ) {
+			global $bitphp;
+			$app_path = 'app';
+
+			if( $bitphp->getProperty('hmvc') ) {
+				$app_path .= '/' . ( empty( $url[0] ) ? $bitphp->getProperty('main_app') : $url[0] );
+			}
+			//validate app
+			self::validate_app( $app_path );
+			return $app_path;
+		}
+
+		private function getAppController( $url ) {
+			global $bitphp;
+			$index = ( $bitphp->getProperty('hmvc') ) ? 1 : 0 ;
+			return empty( $url[$index] ) ? $bitphp->getProperty('main_controller') : $url[$index];
+		}
+
+		private function getAppAction( $url ) {
+			global $bitphp;
+			$index = ( $bitphp->getProperty('hmvc') ) ? 2 : 1 ;
+			return empty( $url[$index] ) ? $bitphp->getProperty('main_action') : $url[$index];
+		}
+
+		public function getFullServerName() {
+			return ( empty( $_SERVER['HTTPS'] ) ? 'http://' : 'https://' ) . $_SERVER['SERVER_NAME'];
+		}
+
 		public static function parse_route( $route = null ) {
 			global $bitphp;
 
 			//BASE_PATH
-			$path = $bitphp->getEnviromentProperty('base_path');
-			$len = strlen( $path ) - 1;
-      		$path = ( $path[ $len ] == '/' ) ? substr( $path, 0, $len) : $path ;
-      		$_ROUTE['BASE_PATH'] = $path;
-
-			//String and URL array
-			if ( !$route ) {
-				$_ROUTE['URL'] =  empty($_GET['_route']) ? array() : explode('/', $_GET['_route']);
-			} else {
-				$_ROUTE['URL'] = explode('/', $route);
-			}
-
+      			$_ROUTE['BASE_PATH'] = self::getBasePath();
+      			//Url
+      			$_ROUTE['URL'] = self::getUrl( $route );
 			//APP_PATH
-			$_ROUTE['APP_PATH'] = 'app';
-
-			if( $bitphp->getProperty('hmvc') ) {
-				$_ROUTE['APP_PATH'] .= '/' . ( empty( $_ROUTE['URL'][0] ) ? $bitphp->getProperty('main_app') : $_ROUTE['URL'][0] );
-			}
-
-			self::validate_app( $_ROUTE['APP_PATH'] );
-
+			$_ROUTE['APP_PATH'] = self::getAppPath( $_ROUTE['URL'] );
 			//APP CONTROLLER
-			$i = ( $bitphp->getProperty('hmvc') ) ? 1 : 0 ;
-			$_ROUTE['APP_CONTROLLER'] = empty( $_ROUTE['URL'][$i] ) ? $bitphp->getProperty('main_controller') : $_ROUTE['URL'][$i];
-
+			$_ROUTE['APP_CONTROLLER'] = self::getAppController( $_ROUTE['URL'] );
 			//APP ACCTION
-			$i = ( $bitphp->getProperty('hmvc') ) ? 2 : 1 ;
-			$_ROUTE['APP_ACCTION'] = empty( $_ROUTE['URL'][$i] ) ? $bitphp->getProperty('main_action') : $_ROUTE['URL'][$i];
-
+			$_ROUTE['APP_ACCTION'] = self::getAppAction( $_ROUTE['URL'] );
 			//SERVER NAME
-			$_ROUTE['SERVER_NAME'] = ( empty( $_SERVER['HTTPS'] ) ? 'http://' : 'https://' ) . $_SERVER['SERVER_NAME'];
-
+			$_ROUTE['SERVER_NAME'] = self::getFullServerName();
+			//PUBLIC_PATH_LINK
+			$_ROUTE['PUBLIC'] = $_ROUTE['SERVER_NAME'] . $_ROUTE['BASE_PATH'] . '/public';
+			
 			//APP_LINK
 			$_ROUTE['APP_LINK'] = $_ROUTE['SERVER_NAME'] . $_ROUTE['BASE_PATH'];
 
 			if( $bitphp->getProperty('hmvc') ) {
 				$_ROUTE['APP_LINK'] .= '/' . ( empty($_ROUTE['URL'][0]) ? $bitphp->getProperty('main_app') : $_ROUTE['URL'][0] );
 			}
-
-			//PUBLIC_PATH_LINK
-			$_ROUTE['PUBLIC'] = $_ROUTE['SERVER_NAME'] . $_ROUTE['BASE_PATH'] . '/public';
 
 			return $_ROUTE;
 		}
