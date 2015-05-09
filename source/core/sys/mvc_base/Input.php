@@ -7,17 +7,11 @@
   class Input {
 
     /**
-    *	<p>ONLY WITH BITPHP, gets the value of the specified index in url params, and filters
-    *	html chars, return null if index isn't set.</p><p>Url parameters are received here more
-    *	easily, however, you can do as in previous versions, for compatibility with applications
-    *	developed in previous versions.</p>
-    *
-    *	@global string $_URLPARAMS this variable contains url parameters
     *	@param string $index index of $_params to search
-    *	@param boolean $html_filter optional param, indicates whether to filter html chars, true by default
+    *	@param boolean $filter optional param, indicates whether to filter html chars, true by default
     *	@return string
     */
-    public function urlParam($index, $html_filter = true)
+    public function urlParam($index, $filter = true)
     {
       global $bitphp;
       $_ROUTE = $bitphp->route;
@@ -30,48 +24,39 @@
         $string = ($index !== false) ? $_ROUTE['URL'][$index + 1] : null ;
       }
     
-      return $html_filter && $string !== null ? htmlentities($string, ENT_QUOTES) : $string;
+      return $filter && $string !== null ? htmlentities($string, ENT_QUOTES) : $string;
     }
 
     /**
-    *	Gets the value of the specified key in $_POST, and filters
-    *	html chars, return null if key isn't set.
-    *
     *	@param string $index index of $_POST to search
-    *	@param boolean $html_filter optional param, indicates whether to filter html chars, true by default
+    *	@param boolean $filter optional param, indicates whether to filter html chars, true by default
     *	@return string
     */
-    public function post($index, $html_filter = true)
+    public function post($index, $filter = FILTER_SANITIZE_FULL_SPECIAL_CHARS)
     {
-      $string = isset($_POST[$index]) && $_POST[$index] !== '' ? $_POST[$index] : null;
-      return $html_filter && $string !== null ? htmlentities($string, ENT_QUOTES) : $string;
+      if( $filter === false ) { $filter = FILTER_DEFAULT; }
+      return filter_input(INPUT_POST, $index, $filter);
     }
 
     /**
-    *	Gets the value of the specified key in $_GET, and filters
-    *	html chars, return null if key isn't set.
-    *
     *	@param string $index index of $_GET to search
-    *	@param boolean $html_filter optional param, indicates whether to filter html chars, true by default
+    *	@param boolean $filter optional param, indicates whether to filter html chars, true by default
     *	@return string
     */
-    public function get($index, $html_filter = true)
+    public function get($index, $filter = FILTER_SANITIZE_FULL_SPECIAL_CHARS)
     {
-      $string = isset($_GET[$index]) && $_GET[$index] !== '' ? $_GET[$index] : null;
-      return $html_filter && $string !== null ? htmlentities($string, ENT_QUOTES) : $string;
+      if( $filter === false ) { $filter = FILTER_DEFAULT; }
+      return filter_input(INPUT_GET, $index, $filter);
     }
 
     /**
-    *	Gets the value of the specified key in $_COOKIE, and filters
-    *	html chars, return null if key isn't set.
-    *
     *	@param string $index index of $_COOKIE to search
-    *	@param boolean $html_filter optional param, indicates whether to filter html chars, true by default
+    *	@param boolean $filter optional param, indicates whether to filter html chars, true by default
     *	@return string
     */
-    public function cookie($index, $html_filter = true)
+    public function cookie($index, $filter = FILTER_SANITIZE_FULL_SPECIAL_CHARS)
     {
-      $string = isset($_COOKIE[$index]) && $_COOKIE[$index] !== '' ? $_COOKIE[$index] : null;
-      return $html_filter && $string !== null ? htmlentities($string, ENT_QUOTES) : $string;
+      if( $filter === false ) { $filter = FILTER_DEFAULT; }
+      return filter_input(INPUT_COOKIE, $index, $filter);
     }
   }
