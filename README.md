@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/0oeduardoo0/BitPHP/badges/gpa.svg)](https://codeclimate.com/github/0oeduardoo0/BitPHP)
+
 # BitPHP
 
 BitPHP es un framework para el desarrollo web, orientado al programador aprendiz, sabemos lo difícil y tedioso qué puede llegar a ser el embarcarte con una nueva herramienta de desarrollo. Fue a raíz de esto qué surge BitPHP, para qué rapidamente puedas comenzar a crear fantasticas aplicaciones :D
