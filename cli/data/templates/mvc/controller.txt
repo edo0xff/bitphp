@@ -1,0 +1,19 @@
+<?php
+
+	/**
+	 * Controller example
+	 *
+	 * visit http://bitphp.root404.com/docs for more
+	 * information
+	 */
+
+	use \BitPHP\Mvc\Load;
+
+	class Say {
+		public function hello() {
+			Load::module('Template');
+			$this->template->load('welcome')
+						   ->render()
+						   ->draw();
+		}
+	}

@@ -1,0 +1,33 @@
+<?php
+	/**
+	 *	Micro MVC index template
+	 */
+	require('core/bit.php');
+	
+	//Load template module
+	require('core/modules/Template.php');
+
+	//Init micro mvc service
+	$app = $bitphp->loadMicroServer();
+
+	//Setting app property "template" as an
+	//Template object
+	$app->set('template', new Template());
+
+	//Create a function to handle 404 exception
+	$app->set('notFound', function() {
+		echo "404 not found";
+	});
+
+	// Handle for route "/say/hello"
+	$app->route('/say/hello', function() use ($app){
+		$app->template->load('welcome')
+					  ->render()
+					  ->draw();
+	});
+
+	try {
+		$app->run();
+	} catch( Exception $e ) {
+		$app->notFound();
+	}

@@ -1,0 +1,26 @@
+{
+	"enviroment": "develop",
+	"develop": {
+		"base_path": "\/",
+		"debug": 1,
+		"db_connection": {
+			"driver": "mysql",
+			"charset": "uft8",
+			"host": "localhost",
+			"user": "root",
+			"pass": ""
+		}
+	},
+	"production": {
+		"base_path": "\/",
+		"debug": 0,
+		"db_connection": {
+			"driver": "mysql",
+			"charset": "uft8",
+			"host": "localhost",
+			"user": "root",
+			"pass": ""
+		}
+	},
+	"db_aliases":{}
+}

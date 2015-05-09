@@ -1,0 +1,19 @@
+<?php
+
+	require 'data/ConsoleColors.php';
+	require 'data/StandardLibrary.php';
+	require 'data/FileWriter.php';
+	require 'data/Igniter.php';
+	require 'data/RestIgniter.php';
+	require 'data/MicroIgniter.php';
+	require 'data/HmvcIgniter.php';
+	require 'data/MvcIgniter.php';
+	require 'data/ConfigIgniter.php';
+	require 'data/BitphpCli.php';
+
+	use \BitPHP\Cli\ConsoleColors as Colors;
+	use \BitPHP\Cli\BitphpCli;
+
+	$cli = new BitphpCli();
+	$command = isset($argv[1]) ? $argv[1] : 'help' ;
+	$cli->$command( $argv );

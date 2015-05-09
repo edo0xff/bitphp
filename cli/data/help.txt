@@ -1,0 +1,30 @@
++-----------------------------------------+
+|  BitPHP Command Line Interface v 1.0.0  |
++-----------------------------------------+
+
+ usage: php dummy [action] [parameters]
+
+ actions:
+   init   - Create new app
+            [optional parameters]
+            mvc       - To create a new mvc application
+            hmvc      - To create a new hmvc application
+            micro     - To create a new micro mvc app
+            rest      - To create a new RESTful app
+            migration - To create a migration environment
+
+   create - Create something
+            
+            [paremeters]
+            config.json       
+                              - Create new config file in /app
+            config.json <dirpath> 
+                              - Create new config file in <dir>
+            controller <name1,name2,[...]>
+                              - Create a controller(s) for MVC/HMVC app
+            model <name1,name2,[...]>
+                              - Create a model(s) for MVC/HMVC app
+            view  <name1,name2,[...]>
+                              - Create a view(s) for MVC/HMVC app
+
+   update - Check for updates
