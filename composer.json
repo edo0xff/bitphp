@@ -1,0 +1,18 @@
+{
+    "name": "bitphp/framework",
+    "description": "Framework for dummies",
+    "keywords": ["framework","bitphp"],
+    "homepage": "http://bitphp.root404.com",
+    "license": "GNU/GLPv3",
+    "authors": [
+        {
+            "name": "Eduardo Becerril",
+            "email": "eduardo@root404.com",
+            "homepage": "http://root404.com/staff/eduardo",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    }
+}
