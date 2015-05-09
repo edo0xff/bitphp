@@ -3,15 +3,14 @@
 	require 'data/ConsoleColors.php';
 	require 'data/StandardLibrary.php';
 	require 'data/FileWriter.php';
-	require 'data/Igniter.php';
-	require 'data/RestIgniter.php';
-	require 'data/MicroIgniter.php';
-	require 'data/HmvcIgniter.php';
-	require 'data/MvcIgniter.php';
-	require 'data/ConfigIgniter.php';
+	require 'data/igniters/Igniter.php';
+	require 'data/igniters/RestIgniter.php';
+	require 'data/igniters/MicroIgniter.php';
+	require 'data/igniters/HmvcIgniter.php';
+	require 'data/igniters/MvcIgniter.php';
+	require 'data/igniters/ConfigIgniter.php';
 	require 'data/BitphpCli.php';
 
-	use \BitPHP\Cli\ConsoleColors as Colors;
 	use \BitPHP\Cli\BitphpCli;
 
 	$cli = new BitphpCli();
