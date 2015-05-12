@@ -1,6 +1,7 @@
 <?php
 
-	use \BitPHP\Sys\Error as ErrorDebugger;
+	use \BitPHP\Mvc\Load;
+	use \BitPHP\Mvc\Input;
 
 	class BitController {
 
@@ -12,8 +13,9 @@
 
 			global $bitphp;
 
-			$this->load  = new \BitPHP\Mvc\Load();
-			$this->input = new \BitPHP\Mvc\Input();
+			$this->load  = new Load();
+			$this->input = new Input();
 			$this->error = $bitphp->error;
+			$this->config = $bitphp->config;
 		}
 	}

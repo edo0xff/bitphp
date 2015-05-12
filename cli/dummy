@@ -1,14 +1,5 @@
 <?php
 
-	require 'data/ConsoleColors.php';
-	require 'data/StandardLibrary.php';
-	require 'data/FileWriter.php';
-	require 'data/igniters/Igniter.php';
-	require 'data/igniters/RestIgniter.php';
-	require 'data/igniters/MicroIgniter.php';
-	require 'data/igniters/HmvcIgniter.php';
-	require 'data/igniters/MvcIgniter.php';
-	require 'data/igniters/ConfigIgniter.php';
 	require 'data/BitphpCli.php';
 
 	use \BitPHP\Cli\BitphpCli;

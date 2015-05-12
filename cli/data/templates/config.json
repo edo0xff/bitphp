@@ -10,7 +10,7 @@
 		"debug": 1,
 		"db_connection": {
 			"driver": "mysql",
-			"charset": "uft8",
+			"charset": "utf8",
 			"host": "localhost",
 			"user": "root",
 			"pass": ""
@@ -21,7 +21,7 @@
 		"debug": 0,
 		"db_connection": {
 			"driver": "mysql",
-			"charset": "uft8",
+			"charset": "utf8",
 			"host": "localhost",
 			"user": "root",
 			"pass": ""

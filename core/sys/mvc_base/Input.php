@@ -6,6 +6,9 @@
   */
   class Input {
 
+    const HMVC_URL_JUMP = 3;
+    const MVC_URL_JUMP  = 2;
+
     /**
     *	@param string $index index of $_params to search
     *	@param boolean $filter optional param, indicates whether to filter html chars, true by default
@@ -14,14 +17,19 @@
     public function urlParam($index, $filter = true)
     {
       global $bitphp;
-      $_ROUTE = $bitphp->route;
+      $route = $bitphp->route;
 
       if( is_numeric($index) ) { 
-        $index += ( $bitphp->getProperty('hmvc') ) ? 3 : 2 ;
-        $string = isset($_ROUTE['URL'][$index]) && $_ROUTE['URL'][$index] !== '' ? $_ROUTE['URL'][$index] : null;
+        
+        $index += ( $bitphp->config->property('hmvc') ) ? self::HMVC_URL_JUMP : self::MVC_URL_JUMP;
+        $string = isset($route['URL'][$index]) && $route['URL'][$index] !== '' ? $route['URL'][$index] : null;
       } else {
-        $index = array_search($index, $_ROUTE['URL']);
-        $string = ($index !== false) ? $_ROUTE['URL'][$index + 1] : null ;
+
+        $index = array_search($index, $route['URL']);
+        
+        if( $index === false ) { return null; }
+        if( !isset( $route['URL'][$index + 1] ) ) { return ''; }
+        return $route['URL'][$index + 1];
       }
     
       return $filter && $string !== null ? htmlentities($string, ENT_QUOTES) : $string;

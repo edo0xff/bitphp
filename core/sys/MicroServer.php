@@ -1,12 +1,15 @@
 <?php namespace BitPHP\Apps;
 
-	require( 'core/sys/microserver_base/Route.php' );
-	require( 'core/sys/bitphp_base/DataBase.php' );
+	require 'core/sys/microserver_base/CleanData.php';
+	require 'core/sys/microserver_base/Route.php';
+	require 'core/sys/microserver_base/PatternParser.php';
 
 	use \Exception;
 	use \Closure;
 	use \RunTimeException;
-	use \BitPHP\MicroServer\Route as MicroRoute;
+	use \BitPHP\MicroServer\Route;
+	use \BitPHP\MicroServer\CleanData;
+	use \BitPHP\MicroServer\PatternParser as Pattern;
 
 	class MicroServer {
 
@@ -15,16 +18,11 @@
 		public $requestData;
 
 		public function __construct() {
-
-			$this->route = empty($_GET['_route']) ? '/' : '/' . $_GET['_route'];
-			$this->route = $this->cleanData( $this->route );
-
-			/* para eliminar el slash al final de la ruta, para que "/la_wea" se igual a "/la_wea/" */
-			$len = strlen( $this->route ) - 1;
-      		$this->route = ( $len > 1 && $this->route[ $len ] == '/' ) ? substr( $this->route, 0, $len) : $this->route ;
-
-      		MicroRoute::parseRoute();
-      		$this->requestData = $this->cleanData( $_REQUEST );
+			global $bitphp;
+			
+      		$bitphp->route = Route::parseRoute();
+      		$this->route = $bitphp->route['MICRO_ROUTE'];
+      		$this->requestData = CleanData::filter( $_REQUEST );
 		}
 
 		public function __call( $methodName, array $args ) {
@@ -36,23 +34,8 @@
 		}
 
 		public function request( $index ) {
-			return !empty( $this->requestData[$index] ) ? $this->requestData[$index]  :  null ;
+			return !empty( $this->requestData[$index] ) ? $this->requestData[$index]  :  null;
 		}
-
-		public function cleanData( $_something ) {
-     		$data = null;
-
-     		if( is_array( $_something ) ) {
-       			$data = array();
-       			foreach ($_something as $key => $value) {
-         			$data[ $key ] = $this->cleanData( $value );
-	       		}
-     		} else {
-       			$data = trim( htmlentities( $_something, ENT_QUOTES ) );
-     		}
-
-	    	return $data;
-   		}
 
    		public function set( $item, $value ) {
 			
@@ -64,28 +47,9 @@
 			$this->newFunctions[ $item ] = Closure::bind( $value, $this, get_class() );
 		}
 
-		public function createPattern( $pattern ) {
-
-			$search = [
-				  '/'
-				, ':word'
-				, ':number'
-				, ':any'
-			];
-
-			$replace = [
-				  '\/'
-				, '(\w+)'
-				, '(\d+)'
-				, '(.*)'
-			];
-
-			return '/^' . str_replace( $search, $replace, $pattern ) . '$/';
-		}
-
 		public function route( $route, $callback ) {
 
-			$pattern = $this->createPattern( $route );
+			$pattern = Pattern::create( $route );
 			$this->routes[$pattern] = $callback;
 		}
 
@@ -94,12 +58,12 @@
 			$routes = $routes !== null ? $routes : $this->routes;
 
 			foreach ($routes as $pattern => $callback) {
-				if (@preg_match($pattern, $this->route, $params)) {
+				if (@preg_match( $pattern, $this->route, $params )) {
 					array_shift($params);
 					return call_user_func_array($callback, array_values($params));
 				}
 			}
 
-			throw new \Exception("Error Processing Request: 404", 1);
+			throw new Exception("Error Processing Request: 404", 1);
 		}
 	}

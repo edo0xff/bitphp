@@ -25,7 +25,7 @@
 
 		public static function create( $output_dir = null, $template = 'data/templates/config.json' ) {
 
-			$message = "Do you want to create config,josn now? (yes/no): ";
+			$message = "Do you want to create config,josn now? (yes/no):";
 			Standard::output( $message, 'EMPASIS', false );
 
 			$input = Standard::input();

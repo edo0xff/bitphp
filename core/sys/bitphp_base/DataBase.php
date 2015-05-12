@@ -6,8 +6,30 @@
   /**
   * @author Eduardo B <ms7rbeta@gmail.com>
   */
-  class DataBase
-  {
+  class DataBase {
+
+    protected function parseAlias( $dbname ) {
+      global $bitphp;
+
+      $dbname = explode( ':', $dbname);
+      if ( $dbname[0] == 'alias' )  {
+
+        if( empty( $bitphp->config->property('db_aliases')[ $dbname[1] ] ) ) {
+
+          $message   = "No se pudo cargar el nombre de base de datos del alias.";
+          $exception = "No se a definido el alias <b>$dbname[1]</b>.";
+          $bitphp->error->trace( $message, $exception );
+        }
+
+        $alias = $bitphp->config->property('db_aliases')[ $dbname[1] ];
+        $dbname = $alias[ $bitphp->config->property('enviroment') ];
+      } else {
+        $dbname = $dbname[0];
+      }
+
+      return $dbname;
+    }
+
     /**
     *	Returns mysql driver, with default data base conection parameters (if not overwritten)
     *
@@ -19,29 +41,15 @@
     public function driver($dbname, $params = Null) {
       global $bitphp;
 
-      $dbname = explode( ':', $dbname);
-      if ( $dbname[0] == 'alias' ) {
-        if( empty( $bitphp->getProperty('db_aliases')[ $dbname[1] ] ) ) {
-          $m = "No se pudo cargar el nombre de base de datos del alias.";
-          $e = 'No se a definido el alias <b>$alias</b>.';
-          $bitphp->error->trace( $m, $e );
-        }
-
-        $alias = $bitphp->getProperty('db_aliases')[ $dbname[1] ];
-        $dbname = $alias[ $bitphp->getProperty('enviroment') ];
-      } else {
-        $dbname = $dbname[0];
-      }
-
-      $params = $params ? $params : $bitphp->getEnviromentProperty('db_connection');
+      $dbname = self::parseAlias( $dbname );
+      $params = $params ? $params : $bitphp->config->environmentProperty('db_connection');
 
       try {
-        return new PDO($params['driver'].':host='.$params['host'].';dbname='.$dbname.';charset='.$params['charset'],$params['user'],$params['pass']);
-      } catch ( PDOException $e ) {
-        $bitphp->error->trace(
-            'Error al conectar con la base de datos. Verifica los parametros de conexion en el archivo de configuracion.'
-          , $e->getMessage()
-        );
+        $pdo = $params['driver'].':host='.$params['host'].';dbname='.$dbname.';charset='.$params['charset'];
+        return new PDO( $pdo ,$params['user'],$params['pass']);
+      } catch ( PDOException $exception ) {
+        $message = 'Error al conectar con la base de datos. Verifica los parametros de conexion en el archivo de configuracion.';
+        $bitphp->error->trace( $message, $exception->getMessage() );
       }
     }
   }

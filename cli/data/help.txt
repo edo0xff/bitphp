@@ -28,3 +28,7 @@
                               - Create a view(s) for MVC/HMVC app
 
    update - Check for updates
+
+   remove - Delete de app
+
+   restore - Restore the last removed app

@@ -44,6 +44,7 @@
 		}
 
 		public static function input() {
+			echo " ";
 			return trim( fgets( STDIN ) );
 		}
 	}

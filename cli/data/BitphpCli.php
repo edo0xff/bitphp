@@ -1,11 +1,23 @@
 <?php namespace BitPHP\Cli;
 
+	require 'data/ConsoleColors.php';
+	require 'data/StandardLibrary.php';
+	require 'data/FileWriter.php';
+	require 'data/igniters/Igniter.php';
+	require 'data/igniters/RestIgniter.php';
+	require 'data/igniters/MicroIgniter.php';
+	require 'data/igniters/HmvcIgniter.php';
+	require 'data/igniters/MvcIgniter.php';
+	require 'data/igniters/ConfigIgniter.php';
+	require 'data/igniters/RemoveIgniter.php';
+
 	use \BitPHP\Cli\ConfigIgniter as Config;
 	use \BitPHP\Cli\StandardLibrary as Standard;
 	use \BitPHP\Cli\MvcIgniter as Mvc;
 	use \BitPHP\Cli\HmvcIgniter as Hmvc;
 	use \BitPHP\Cli\MicroIgniter as Micro;
 	use \Bitphp\Cli\RestIgniter as Rest;
+	use \BitPHP\Cli\RemoveIgniter as Remove;
 
 	class BitphpCli {
 
@@ -26,6 +38,22 @@
 		public function help() {
 			$help = file_get_contents( 'data/help.txt' );
 			Standard::output( $help );
+		}
+
+		public function remove() {
+			Standard::output( 'Are you sure? (yes/no):' , 'EMPASIS', false );
+			$confirm = Standard::input();
+			if( $confirm == 'no' || $confirm == 'n' ) { return; }
+
+			Standard::output( 'Seriusly??? (yes/no):','EMPASIS', false );
+			$confirm = Standard::input();
+			if( $confirm == 'no' || $confirm == 'n' ) { return; }
+
+			Remove::init();
+		}
+
+		public function restore() {
+			Remove::restore();
 		}
 
 		public function create( $args ) {
