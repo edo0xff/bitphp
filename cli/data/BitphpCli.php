@@ -4,19 +4,19 @@
 	require 'data/StandardLibrary.php';
 	require 'data/FileWriter.php';
 	require 'data/igniters/Igniter.php';
-	require 'data/igniters/RestIgniter.php';
-	require 'data/igniters/MicroIgniter.php';
-	require 'data/igniters/HmvcIgniter.php';
-	require 'data/igniters/MvcIgniter.php';
-	require 'data/igniters/ConfigIgniter.php';
+	require 'data/igniters/Rest.php';
+	require 'data/igniters/Micro.php';
+	require 'data/igniters/Hmvc.php';
+	require 'data/igniters/Mvc.php';
+	require 'data/igniters/Config.php';
 	require 'data/igniters/RemoveIgniter.php';
 
-	use \BitPHP\Cli\ConfigIgniter as Config;
+	use \BitPHP\Cli\Igniters\Config;
 	use \BitPHP\Cli\StandardLibrary as Standard;
-	use \BitPHP\Cli\MvcIgniter as Mvc;
-	use \BitPHP\Cli\HmvcIgniter as Hmvc;
-	use \BitPHP\Cli\MicroIgniter as Micro;
-	use \Bitphp\Cli\RestIgniter as Rest;
+	use \BitPHP\Cli\Igniters\Mvc;
+	use \BitPHP\Cli\Igniters\Hmvc;
+	use \BitPHP\Cli\Igniters\Micro;
+	use \Bitphp\Cli\Igniters\Rest;
 	use \BitPHP\Cli\RemoveIgniter as Remove;
 
 	class BitphpCli {

@@ -1,9 +1,9 @@
-<?php namespace BitPHP\Cli;
+<?php namespace BitPHP\Cli\Igniters;
 
 	use \BitPHP\Cli\FileWriter as File;
 	use \BitPHP\Cli\StandardLibrary as Standard;
 
-	class ConfigIgniter {
+	class Config {
 		private static function readConfigValue( $config, $recursive = null ) {
 			foreach ($config as $key => $value) {
 				if( !is_array( $value ) ) {
@@ -25,7 +25,7 @@
 
 		public static function create( $output_dir = null, $template = 'data/templates/config.json' ) {
 
-			$message = "Do you want to create config,josn now? (yes/no):";
+			$message = "Do you want to create config.json now? (yes/no):";
 			Standard::output( $message, 'EMPASIS', false );
 
 			$input = Standard::input();

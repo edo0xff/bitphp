@@ -32,3 +32,21 @@
    remove - Delete de app
 
    restore - Restore the last removed app
+
+
+[EXAMPLES]
+
+   php dummy init 
+   - To create a blank app
+
+   php dummy init mvc 
+   - Initialize a MVC service
+
+   php dummy create config.json 
+   - To create a config.json in app/
+
+   php dummy create config.json /home/User/Documents/
+   - To create a config.json in /home/User/Documents/
+
+   php dummy revome
+   - To remove the app

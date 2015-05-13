@@ -13,7 +13,8 @@
 		public function __construct() {
 			$config_json = @file_get_contents( 'app/config.json' );
 			if( $config_json === false ) {
-				throw new Exception("Error Processing Request", 1);
+				$this->maker();
+				exit;
 			}
 
 			$this->data = json_decode( $config_json, true );

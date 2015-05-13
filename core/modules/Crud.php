@@ -8,6 +8,9 @@
   	*/
 	class Crud {
 
+		const ORDER_DESC = 'down';
+		const ORDER_ASC  = 'up';
+
 		private $db = null;
 		private $table_name = null;
 		private $initialized_query = null;
@@ -193,7 +196,7 @@
 				$bitphp->error->trace( $message, $exception );
 			}
 
-			$this->string .= " ORDER BY $key " . ( $mode == 'up' ? 'ASC' : 'DESC' );
+			$this->string .= " ORDER BY $key " . ( $mode == self::ORDER_ASC ? 'ASC' : 'DESC' );
 			return $this;
 		}
 

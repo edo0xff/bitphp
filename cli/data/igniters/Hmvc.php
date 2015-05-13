@@ -1,11 +1,11 @@
-<?php namespace BitPHP\Cli;
+<?php namespace BitPHP\Cli\Igniters;
 	
 	use \BitPHP\Cli\StandardLibrary as Standard;
 	use \BitPHP\Cli\FileWriter as File;
-	use \BitPHP\Cli\ConfigIgniter as Config;
+	use \BitPHP\Cli\Igniters\Config;
 	use \BitPHP\Cli\Interfaces\Igniter;
 
-	class HmvcIgniter implements Igniter {
+	class Hmvc implements Igniter {
 		private static function makeDirs() {
 			Standard::output("Creating HMVC directories...");
 			//app

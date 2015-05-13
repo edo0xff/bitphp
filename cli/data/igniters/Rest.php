@@ -1,11 +1,11 @@
-<?php namespace BitPHP\Cli;
+<?php namespace BitPHP\Cli\Igniters;
 
 	use \BitPHP\Cli\StandardLibrary as Standard;
 	use \BitPHP\Cli\FileWriter as File;
-	use \BitPHP\Cli\ConfigIgniter as Config;
+	use \BitPHP\Cli\Igniters\Config;
 	use \BitPHP\Cli\Interfaces\Igniter;
 
-	class RestIgniter implements Igniter {
+	class Rest implements Igniter {
 
 		private static function makeIndex() {
 			$index = file_get_contents( 'data/templates/rest/index.txt' );
