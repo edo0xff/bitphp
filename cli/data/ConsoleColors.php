@@ -25,7 +25,16 @@
 		];
 
 		private static function color( $color ) {
-			return chr( 27 ) . self::$linuxPallete[ $color ];
+			$sistem = substr(PHP_OS, 0, 3);
+			$sistem = strtoupper( $sistem );
+
+			if( $sistem == 'WIN' ) {
+				return null;
+			} else {
+				$color = chr( 27 ) . self::$linuxPallete[ $color ];
+			}
+
+			return $color;
 		}
 
 		//\033[1;31mbold red text\033[0m\n
