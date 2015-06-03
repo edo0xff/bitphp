@@ -4,6 +4,7 @@
 
 	use \BitPHP\Cli\BitphpCli;
 
+	# Coded by Eduardo B <ms7rbeta@gmail.com>
 	$cli = new BitphpCli();
 	$command = isset($argv[1]) ? $argv[1] : 'help' ;
 	$cli->$command( $argv );

@@ -10,6 +10,7 @@
 	require 'data/igniters/Mvc.php';
 	require 'data/igniters/Config.php';
 	require 'data/igniters/RemoveIgniter.php';
+	require 'data/igniters/Update.php';
 
 	use \BitPHP\Cli\Igniters\Config;
 	use \BitPHP\Cli\StandardLibrary as Standard;
@@ -17,6 +18,7 @@
 	use \BitPHP\Cli\Igniters\Hmvc;
 	use \BitPHP\Cli\Igniters\Micro;
 	use \Bitphp\Cli\Igniters\Rest;
+	use \BitPHP\Cli\Igniters\Update;
 	use \BitPHP\Cli\RemoveIgniter as Remove;
 
 	class BitphpCli {
@@ -69,6 +71,10 @@
 					$this->suggestHelps();
 					break;
 			}
+		}
+
+		public function update() {
+			Update::init();
 		}
 
 		public function init( $args ) {

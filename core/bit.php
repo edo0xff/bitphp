@@ -9,10 +9,9 @@
 	use \BitPHP\Apps\MvcServer;
 	use \BitPHP\Apps\ApiServer;
 	use \BitPHP\Apps\MicroServer;
+	use \BitPHP\Apps\SocketServer;
 	
-	/**
-	 *	Coded by Eduardo B <ms7rbeta@gmail.com>
-	 */
+	# Coded by Eduardo B <ms7rbeta@gmail.com>
 	class BitPHP {
 
 		public $config = null;
@@ -37,6 +36,11 @@
 		public function loadApiServer() {
 			require('core/sys/ApiServer.php');
 			return new ApiServer();
+		}
+
+		public function loadSocketServer($address, $port) {
+			require 'core/sys/SocketServer.php';
+			return new SocketServer($address, $port);
 		}
 	}
 

@@ -85,8 +85,6 @@
 				$_ROUTE['APP_LINK'] .= '/' . ( empty($_ROUTE['URL'][0]) ? $bitphp->config->property('main_app') : $_ROUTE['URL'][0] );
 			}
 
-			//JSON
-			$_ROUTE['JSON'] = json_encode( $_ROUTE );
 			return $_ROUTE;
 		}
 	}

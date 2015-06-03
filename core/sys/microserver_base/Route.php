@@ -42,6 +42,7 @@
 			$_ROUTE['PUBLIC'] = $_ROUTE['SERVER_NAME'] . $_ROUTE['BASE_PATH'] . '/public';
 			//MICRO_ROUTE
 			$_ROUTE['MICRO_ROUTE'] = self::getMicroRoute();
+
 			return $_ROUTE;
 		}
 	}

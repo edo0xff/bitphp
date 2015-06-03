@@ -10,11 +10,11 @@
         		if(is_array( $value )) {
             		if(!is_numeric( $key )){
                 		$subnode = $xml_student_info->addChild( $key );
-                		$this->array_to_xml( $value, $subnode );
+                		self::arrayToXml( $value, $subnode );
             		} else {
                 		$subnode = $xml_student_info->addChild( "item" );
                 		//$subnode->addAttribute( 'id',$key );
-                		$this->array_to_xml( $value, $subnode );
+                		self::arrayToXml( $value, $subnode );
             		}
         		} else {
             		$xml_student_info->addChild( $key,$value );
