@@ -15,7 +15,7 @@
       		return $path;
 		}
 
-		private function getRealServerName() {
+		private static function getRealServerName() {
 			return ( empty( $_SERVER['HTTPS'] ) ? 'http://' : 'https://' ) . $_SERVER['SERVER_NAME'];
 		}
 

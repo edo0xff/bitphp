@@ -6,7 +6,7 @@
 
 	class Update implements Igniter {
 
-		const SERVER_URI_BASE = 'http://localhost/api/bit/update';
+		const SERVER_URI_BASE = 'http://bitapi.root404.com';
 
 		private static function check() {
 

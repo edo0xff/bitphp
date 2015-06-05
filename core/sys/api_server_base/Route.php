@@ -1,7 +1,7 @@
 <?php namespace BitPHP\ApiServer;
 
 	class Route {
-		public function getRequestMethod() {
+		public static function getRequestMethod() {
 			$method = $_SERVER['REQUEST_METHOD'];
       
       		if( !(  $method == 'GET'
