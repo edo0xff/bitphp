@@ -28,14 +28,14 @@
     *	@param boolean $trace indicates whether the error should be traced
     *	@return void
     */
-    public function trace($d, $e, $print_trace = true) {
+    public function trace($description, $exception, $print_trace = true) {
       $ex = new Exception();
       $trace = $ex->getTrace();
 
       $log = [
           "TimeStamp" => date('l jS \of F Y h:i:s A')
-        , "Description" => $d
-        , "Exception" => $e
+        , "Description" => $description
+        , "Exception" => $exception
         , "Trace" => $trace
         , "PrintTrace" => $print_trace
       ];
@@ -55,8 +55,8 @@
     }
 
     public function notFound() {
-      global $_ROUTE;
-      $_file = $_ROUTE['APP_PATH'] .'/views/errors/404.php';
+      global $bitphp;
+      $_file = $bitphp->route['APP_PATH'] .'/views/errors/404.php';
 
       http_response_code(404);
       
@@ -70,8 +70,8 @@
     }
 
     public function forbidden() {
-      global $_ROUTE;
-      $_file = $_ROUTE['APP_PATH'] .'/views/errors/403.php';
+      global $bitphp;
+      $_file = $bitphp->route['APP_PATH'] .'/views/errors/403.php';
 
       http_response_code(403);
       
@@ -85,8 +85,8 @@
     }
 
     public function badRequest() {
-      global $_ROUTE;
-      $_file = $_ROUTE['APP_PATH'] .'/views/errors/400.php';
+      global $bitphp;
+      $_file = $bitphp->route['APP_PATH'] .'/views/errors/400.php';
 
       http_response_code(400);
       
@@ -100,8 +100,8 @@
     }
 
     public function unauthorized() {
-      global $_ROUTE;
-      $_file = $_ROUTE['APP_PATH'] .'/views/errors/401.php';
+      global $bitphp;
+      $_file = $bitphp->route['APP_PATH'] .'/views/errors/401.php';
 
       http_response_code(401);
       
