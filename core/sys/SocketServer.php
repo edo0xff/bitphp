@@ -2,14 +2,21 @@
 
     require 'core/sys/socket_base/Client.php';
     require 'core/sys/socket_base/Router.php';
+    require 'core/sys/socket_base/WebHandshake.php';
     #require 'core/sys/socket_base/Console.php';
     require 'cli/data/ConsoleColors.php';
     require 'cli/data/StandardLibrary.php';
 
     use \Closure;
     use \BitPHP\Socket\Client;
+    use \BitPHP\Socket\WebHandshake as Handshake;
     #use \BitPHP\Socket\Console;
     use \BitPHP\Cli\StandardLibrary as Standard;
+
+    define('WEB_SOCKET', 1);
+    define('PLAIN_TCP_SOCKET', 0);
+
+    $_SOCKET_TYPE = 0;
 
     class SocketServer {
 
@@ -57,32 +64,6 @@
             Standard::output("Esperando conexiones en $address:$port",'FINAL');
         }
 
-        /*handshake new client.
-        private function performHandshaking($receved_header, $client_conn, $host, $port) {
-
-            $headers = array();
-            $lines = preg_split("/\r\n/", $receved_header);
-            foreach($lines as $line)
-            {
-                $line = chop($line);
-                if(preg_match('/\A(\S+): (.*)\z/', $line, $matches))
-                {
-                    $headers[$matches[1]] = $matches[2];
-                }
-            }
-
-            $secKey = $headers['Sec-WebSocket-Key'];
-            $secAccept = base64_encode(pack('H*', sha1($secKey . '258EAFA5-E914-47DA-95CA-C5AB0DC85B11')));
-            //hand shaking header
-            $upgrade  = "HTTP/1.1 101 Web Socket Protocol Handshake\r\n" .
-            "Upgrade: websocket\r\n" .
-            "Connection: Upgrade\r\n" .
-            "WebSocket-Origin: $host\r\n" .
-            "WebSocket-Location: ws://$host:$port/demo/shout.php\r\n".
-            "Sec-WebSocket-Accept:$secAccept\r\n\r\n";
-            @socket_write($client_conn, $upgrade, strlen($upgrade));
-        }*/
-
         private function triggerEvent($event, $param1 = null, $param2 = null) {
             if( !isset($this->eventListeners[$event]) ) {
                 Standard::output("El evento $event no tiene un canditado de ejecucion.", 'INFO');
@@ -90,6 +71,15 @@
             }
 
             $this->eventListeners[$event]($param1, $param2);
+        }
+
+        public function mode($mode) {
+            global $_SOCKET_TYPE;
+            $_SOCKET_TYPE = $mode;
+
+            if($mode == 1) {
+                Standard::output('Protocolo web activado.');
+            }
         }
 
         public function shutdown() {
@@ -104,14 +94,6 @@
             unset($this->clients['sockets'][$clientIndex]);
         }
 
-        public function info() {
-            $info = array();
-            $info['clients'] = $this->clients['objects'];
-            $found_socket = array_search($this->mainSocket, $this->clients['sockets']);
-            unset($info['clients'][$found_socket]);
-            return $info;
-        }
-
         public function on($event, $callback) {
             if( !is_callable( $callback ) ) {
                 return 0;
@@ -121,12 +103,14 @@
         }
 
         public function send($message) {
+            $message = Handshake::mask($message);
             foreach ($this->clients['sockets'] as $socket) {
                 @socket_write($socket, $message);
             }
         }
 
         public function sendFrom(Client $client, $message) {
+            $message = Handshake::mask($message);
             $sockets = $this->clients['sockets'];
             unset($sockets[ array_search($client->socket, $sockets) ]);
             foreach ($sockets as $socket) {
@@ -139,6 +123,8 @@
             #$console = new Console($this);
             #$console->start();
 
+            global $_SOCKET_TYPE;
+
             do {
                 $changed = $this->clients['sockets'];
                 socket_select($changed, $write = NULL, $except= NULL, $tv_sec = 5);
@@ -149,8 +135,9 @@
                     $this->clients['objects'][] = $client;
                     $this->clients['sockets'][] = $client->socket; //add socket to client array
 
-                    /*$header = socket_read($client->socket, 1024);
-                    $this->performHandshaking($header, $client->socket, $host, $port);*/
+                    if($_SOCKET_TYPE == 1) {
+                        Handshake::perform($client->socket, $this->address, $this->port);
+                    }
         
                     $this->triggerEvent('connect', $client);
         
@@ -160,18 +147,21 @@
                 }
 
                 foreach ($changed as $changedSocket) {
-                    $buffer = @socket_read($changedSocket, 1024, PHP_NORMAL_READ);
                     $clientIndex = array_search($changedSocket, $this->clients['sockets']);
+
+                    while(socket_recv($changedSocket, $buffer, 1024, 0) >= 1)
+                    {
+                        $buffer = Handshake::unmask($buffer); //unmask data
+                        $this->triggerEvent('read', $this->clients['objects'][$clientIndex], $buffer);
+                        break 2; //exist this loop
+                    }
+
+                    $buffer = @socket_read($changedSocket, 1024, PHP_NORMAL_READ);
 
                     if( $buffer === false ) {
                         $this->triggerEvent('disconnect', $this->clients['objects'][$clientIndex]);
                         unset($this->clients['objects'][$clientIndex]);
                         unset($this->clients['sockets'][$clientIndex]);
-                    } else {
-                        $buffer = str_replace(["\r", "\n"], ['',''], $buffer);
-                        if($buffer) {
-                            $this->triggerEvent('read', $this->clients['objects'][$clientIndex], $buffer);
-                        }
                     }
                 }
             } while ($this->doLoop);

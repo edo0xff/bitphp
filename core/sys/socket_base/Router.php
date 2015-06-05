@@ -18,7 +18,7 @@
             Standard::output("Ninguna accion definida para la ruta $called", 'FAILURE');
         }
 
-        public function route(&$client, $buffer) {
+        public function process(&$client, $buffer) {
             $decoded = json_decode($buffer, true);
             if(empty($decoded['action']) || empty($decoded['data'])) {
                 Standard::output("Formato de datos invalido: $buffer");
