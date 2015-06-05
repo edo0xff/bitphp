@@ -1,10 +1,8 @@
 {
-    "current_release": "340b0ac2361892fffd3ac45785a1272z",
-    "total_changes": "1",
-    "files_changed": [
-        "core\/sys\/ApiServer.php"
-    ],
-    "description": "Comentario chido agregado",
-    "date": "Mar 19 2015 1:05 PM",
-    "more_info": "http:\/\/localhost\/api\/bit\/update\/changelog\/340b0ac2361892fffd3ac45785a1272z"
+    "current_release": "bitphp-r-titan",
+    "total_changes": "0",
+    "files_changed": [],
+    "description": "Sin cambios",
+    "date": "Vie 5 2015 02:47 PM",
+    "more_info": ""
 }
