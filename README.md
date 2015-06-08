@@ -12,12 +12,48 @@ Creemos firmemente qué no importa la complejidad del problema o necesidad qué 
 
 ```php
 <?php
-   $myApp = $bitphp->loadGreatApp();
-   $myApp->makeDreams();
+   $app = $bitphp->loadMicroServer();
+   
+   $app->route('/say/hello', function() use ($app){
+      echo "Hola mundo!";
+   });
+   
+   $app->run();
+```
+```php
+<?php
+   $app = $bitphp->loadApiServer();
+   
+   $app->get('/say/hello', function() use ($app){
+      $app->response([
+           'status' => $app->getStatusMessage()
+         , 'result' => 'Hola mundo!'
+      ]);
+   });
+   
+   $app->run();
+```
+```php
+<?php
+   $server = $bitphp->loadSocketServer();
+   
+   $server->on('connect', function($client) use ($server){
+      $client->send("Hola mundo!");
+   });
+   
+   $server->run();
+```
+```php
+<?php
+   class Say {
+      public function hello() {
+         echo "Hola mundo!";
+      }
+   }
 ```
 # Características
 
-- **Soporte a diversas arquitecturas:** (MVC/HMVC/Micro MVC/RestFUL Service).
+- **Soporte a diversas arquitecturas:** (MVC/HMVC/Micro MVC/RestFUL Service/Sockets).
 - **Velocidad: la ejecución de bitphp** es realmente rápida.
 - **Ligereza:** su núcleo tiene apenas unos cuantos KBytes
 - **Minimalismo:** nos esforzamos en lograr qué las aplicaciones puedan tener un código limpio y fácil de entender.
