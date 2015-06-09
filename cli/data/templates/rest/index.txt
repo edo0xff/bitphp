@@ -1,13 +1,11 @@
 <?php
+	
 	/**
-	 *	RESTful app index template
-	 */
-
-	//Initialize rest service
+     *  This template was created by bitphp cli
+     */
 	require('core/bit.php');
 	$app = $bitphp->loadApiServer();
 
-	// Create a get route to '/api/v1/hello'
 	$app->get('/api/v1/hello', function() use ($app) {
 		$app->response([
 			  'status' => $app->getStatusMessage()
@@ -15,4 +13,4 @@
 		]);
 	});
 
-	$app->start();
+	$app->run();

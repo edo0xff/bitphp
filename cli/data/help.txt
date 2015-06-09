@@ -12,6 +12,7 @@
             hmvc      - To create a new hmvc application
             micro     - To create a new micro mvc app
             rest      - To create a new RESTful app
+            socket    - To create a new Socket server
 
    create - Create something
             

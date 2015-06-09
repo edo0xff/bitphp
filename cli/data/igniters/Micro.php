@@ -41,6 +41,6 @@
 			self::makeTemplate();
 
 			Standard::output( "Micro MVC aplication was created.", 'SUCCESS' );
-			Standard::output( "You can go to http://localhost/say/hello", 'FINAL' );
+			Standard::output( "You can go to http://your.domain.com/say/hello", 'FINAL' );
 		}
 	}

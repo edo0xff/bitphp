@@ -20,6 +20,6 @@
 			self::makeIndex();
 
 			Standard::output( "RESTful aplication was created.", 'SUCCESS' );
-			Standard::output( "You can go to http://localhost/api/v1/hello", 'FINAL' );
+			Standard::output( "You can go to http://your.domain.com/api/v1/hello", 'FINAL' );
 		}
 	}

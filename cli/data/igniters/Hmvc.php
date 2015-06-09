@@ -51,6 +51,6 @@
 			self::makeTemplate();
 
 			Standard::output( "Hmvc aplication was created.", 'SUCCESS' );
-			Standard::output( "You can go to http://localhost/MyApp1/say/hello", 'FINAL' );
+			Standard::output( "You can go to http://your.domain.com/MyApp1/say/hello", 'FINAL' );
 		}
 	}

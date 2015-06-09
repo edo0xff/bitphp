@@ -11,6 +11,7 @@
 	require 'data/igniters/Config.php';
 	require 'data/igniters/RemoveIgniter.php';
 	require 'data/igniters/Update.php';
+	require 'data/igniters/Socket.php';
 	require 'data/igniters/ErrorChecker.php';
 
 	use \BitPHP\Cli\Igniters\Config;
@@ -20,6 +21,7 @@
 	use \BitPHP\Cli\Igniters\Micro;
 	use \Bitphp\Cli\Igniters\Rest;
 	use \BitPHP\Cli\Igniters\Update;
+	use \BitPHP\Cli\Igniters\Socket;
 	use \BitPHP\Cli\Igniters\ErrorChecker as Error;
 	use \BitPHP\Cli\RemoveIgniter as Remove;
 
@@ -133,6 +135,12 @@
 					$message = "Attempt to initialize a RESTful app...";
 					Standard::output( $message );
 					Rest::init();
+					break;
+
+				case 'socket':
+					$message = "Attempt to initialize a Socket server...";
+					Standard::output( $message );
+					Socket::init();
 					break;
 
 				default:

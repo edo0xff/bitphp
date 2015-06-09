@@ -1,8 +1,7 @@
 <?php
 	/**
-	 *	index.php example to run
-	 *	a MVC/HMVC service
-	 */
+     *  This template was created by bitphp cli
+     */
 	require('core/bit.php');
 	$app = $bitphp->loadMvcServer();
 	$app->run();

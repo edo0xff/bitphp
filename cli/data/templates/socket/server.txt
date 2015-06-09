@@ -1,0 +1,27 @@
+<?php
+
+    /**
+     *  This template was created by bitphp cli
+     */
+
+    require 'core/bit.php';
+    $server = $bitphp->loadSocketServer('localhost','6000');
+
+    # Remove comment if you want to create a websocket server
+    # $server->mode(WEB_SOCKET)
+
+    $server->on('connect', function($client) use ($server) {
+        $server->sendFrom($client, $client->ip . ' connected!' . PHP_EOL);
+        echo $client->ip, ' connected!', PHP_EOL;
+    });
+
+    $server->on('disconnect', function($client) use ($server){
+        $server->send($client->ip . ' disconnected!' . PHP_EOL);
+        echo $client->ip, ' disconnected!', PHP_EOL;
+    });
+
+    $server->on('read', function($client, $data) use ($server){
+        $server->sendFrom($client, $data . PHP_EOL);
+    });
+
+    $server->run();
