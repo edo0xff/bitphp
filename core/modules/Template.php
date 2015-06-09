@@ -73,8 +73,8 @@
 	        	$read = @file_get_contents( $_ROUTE['APP_PATH'] .'/views/'.$templates[$j].'.tmpl.php' );
 
         		if($read === FALSE){
-	          		$m = 'Error al renderizar <b>'.$templates[$j].'</b>.';
-          			$c = 'El fichero <b>/' . $_ROUTE['APP_PATH'] .'/views/'.$templates[$j].'.tmpl.php</b> no existe.';
+	          		$m = 'Error al renderizar "'.$templates[$j].'".';
+          			$c = 'El fichero "/' . $_ROUTE['APP_PATH'] .'/views/'.$templates[$j].'.tmpl.php" no existe.';
           			$bitphp->error->trace($m, $c);
 		    	}
 
@@ -97,11 +97,9 @@
 
 			if( $this->template_source == '' ) {
 				$m = 'No se puede renderizar.';
-				$e = 'No se a cargado ninguna plantilla <b>Template::load</b> o la plantilla esta en blanco.';
+				$e = 'No se a cargado ninguna plantilla "Template::load" o la plantilla esta en blanco.';
 				$bitphp->error->trace( $m, $e );
 			}
-
-			$_JS_ROUTE = '<script>var _ROUTE = jQuery.parseJSON(\'' . json_encode( $_ROUTE ) . '\')</script>';
 
 			extract( $this->template_vars );
 			$compiled_source = $this->compile();
@@ -118,7 +116,7 @@
 
 			if( !$this->result ) {
 				$m = 'No se puede leer la plantilla.';
-				$e = 'Aun no se ha renderizado <b>Template::render</b>.';
+				$e = 'Aun no se ha renderizado "Template::render".';
 				$bitphp->error->trace( $m, $e );
 			}
 
@@ -130,7 +128,7 @@
 
 			if( !$this->result ) {
 				$m = 'No se puede imprimir la plantilla.';
-				$e = 'Aun no se ha renderizado <b>Template::render</b>.';
+				$e = 'Aun no se ha renderizado "Template::render".';
 				$bitphp->error->trace( $m, $e );
 			}
 

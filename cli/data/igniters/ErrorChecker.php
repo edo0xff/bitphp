@@ -27,7 +27,7 @@
 
         public function all() {
             $errors = self::readErrorLog();
-            $count = 1;
+            $count = 0;
             foreach ($errors as $error) {
                 $error = json_decode($error, true);
                 if(!empty($error['id'])) {
