@@ -7,8 +7,8 @@
 
 			if( !is_dir( $app ) ) {
 				$description = 'Oops! hubo un problema al ejecutar la aplicacion.';
-				$exception = 'La carpeta de la aplicacion <b>/'. $app .'/</b> no existe.';
-				$bitphp->error->trace($description, $exception, false);
+				$exception = "La carpeta de la aplicacion \"$app\" no existe.";
+				$bitphp->error->trace($description, $exception);
 			}
 
 			return $app;

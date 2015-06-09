@@ -4,16 +4,27 @@
 
 		public $data;
 		
-		private function propertyNotFound( $property ) {
-			$_title =  "La aplicacion requiere de un parametro de configuración <b>$property</b>, el cual no pudimos encontrar.";
-			require('core/views/config_maker.php');
+		private function loadConfigView( $_message = null ) {
+			require 'core/views/sys_header.php';
+			require 'core/views/config.php';
+			require 'core/views/sys_footer.php';
 			exit;
+		}
+
+		private function propertyNotFound($property) {
+			$_message =  'La aplicacion requiere de un parametro de configuración: ';
+			$_message .= "<i>$property</i>, el cual no pudimos encontrar. Trata creando ";
+			$_message .= 'nuevamente el archivo de configuración.';
+			$this->loadConfigView($_message);
 		}
 
 		public function __construct() {
 			$config_json = @file_get_contents( 'app/config.json' );
 			if( $config_json === false ) {
-				$this->maker();
+				$_message  = 'No se encontro el archivo de configuracion <i>config.json</i>, ';
+				$_message .= 'el cual debe situarse en la carpeta <i>app/</i> por favor crea dicho archivo, ';
+				$_message .= 'es necesario.';
+				$this->loadConfigView($_message);
 				exit;
 			}
 
@@ -21,8 +32,7 @@
 		}
 
 		public function maker() {
-			$_title =  "Config maker";
-			require('core/views/config_maker.php');
+			$this->loadConfigView();
 		}
 
 		public function property( $index ) {
@@ -41,8 +51,7 @@
 			$enviroment = $this->data['enviroment'];
 
 			if( !isset( $this->data[ $enviroment ][ $property ] ) ) {
-				$_title =  "La aplicacion requiere de un parametro de configuración <b>$property</b>, el cual no pudimos encontrar.";
-				require('core/views/config_maker.php');
+				$this->propertyNotFound($property);
 				exit;
 			} else {
 				return $this->data[ $enviroment ][ $property ];

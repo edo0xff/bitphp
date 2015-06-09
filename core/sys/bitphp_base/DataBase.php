@@ -17,7 +17,7 @@
         if( empty( $bitphp->config->property('db_aliases')[ $dbname[1] ] ) ) {
 
           $message   = "No se pudo cargar el nombre de base de datos del alias.";
-          $exception = "No se a definido el alias <b>$dbname[1]</b>.";
+          $exception = "No se a definido el alias \"$dbname[1]\".";
           $bitphp->error->trace( $message, $exception );
         }
 

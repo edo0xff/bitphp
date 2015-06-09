@@ -30,7 +30,7 @@
 			if( !$this->db ) { 
 
 				$message = 'Error al seleccionar la tabla.';
-				$exception = 'No puede ser usada antes de inicializar la base de datos <b>Crud::db</b>.';
+				$exception = 'No puede ser usada antes de inicializar la base de datos "Crud::db".';
 				$bitphp->error->trace( $message, $exception );
 			}
 
@@ -44,8 +44,8 @@
 
 			if( !$this->table_name ) { 
 
-				$message = 'Error al ejecutar sentencia <b>Crud::insert</b>.';
-				$exception = 'No puede ser usada antes de inicializar la tabla <b>Crud::table</b>.';
+				$message = 'Error al ejecutar sentencia "Crud::insert".';
+				$exception = 'No puede ser usada antes de inicializar la tabla "Crud::table".';
 				$bitphp->error->trace( $message, $exception );
 			}
 
@@ -72,8 +72,8 @@
 
 			if( !$this->table_name ) { 
 
-				$message = 'Error al ejecutar sentencia <b>Crud::select</b>.';
-				$exception = 'No puede ser usada antes de inicializar la tabla <b>Crud::table</b>.';
+				$message = 'Error al ejecutar sentencia "Crud::select".';
+				$exception = 'No puede ser usada antes de inicializar la tabla "Crud::table".';
 				$bitphp->error->trace( $message, $exception );
 			}
 
@@ -88,8 +88,8 @@
 
 			if( !$this->table_name ) { 
 
-				$message = 'Error al ejecutar sentencia <b>Crud::update</b>.';
-				$exception = 'No puede ser usada antes de inicializar la tabla <b>Crud::table</b>.';
+				$message = 'Error al ejecutar sentencia "Crud::update".';
+				$exception = 'No puede ser usada antes de inicializar la tabla "Crud::table".';
 				$bitphp->error->trace( $message, $exception );
 			}
 
@@ -113,8 +113,8 @@
 
 			if( !$this->table_name ) { 
 
-				$message = 'Error al ejecutar sentencia <b>Crud::delete</b>.';
-				$exception = 'No puede ser usada antes de inicializar la tabla <b>Crud::table</b>.';
+				$message = 'Error al ejecutar sentencia "Crud::delete".';
+				$exception = 'No puede ser usada antes de inicializar la tabla "Crud::table".';
 				$bitphp->error->trace( $message, $exception );
 			}
 
@@ -152,8 +152,8 @@
 			global $bitphp;
 
 			if( !$this->string  ) {
-				$message = 'Error al ejecutar sentencia <b>Crud::where</b>.';
-				$exception = 'Ninguna consulta a sido inicializada <b>Crud::select, Crud::update, Crud::delete</b>.';
+				$message = 'Error al ejecutar sentencia "Crud::where".';
+				$exception = 'Ninguna consulta a sido inicializada "Crud::select, Crud::update, Crud::delete".';
 				$bitphp->error->trace( $message, $exception );
 			}
 
@@ -175,8 +175,8 @@
 			global $bitphp;
 
 			if( $this->initialized_query != 'select' ) {
-				$message = 'Error al ejecutar sentencia <b>Crud::limit</b>.';
-				$exception = 'No se a inicializado ninguna consulta <b>Crud::select</b>.';
+				$message = 'Error al ejecutar sentencia "Crud::limit".';
+				$exception = 'No se a inicializado ninguna consulta "Crud::select".';
 				$bitphp->error->trace( $message, $exception );
 			}
 
@@ -191,8 +191,8 @@
 			global $bitphp;
 
 			if( $this->initialized_query != 'select' ) {
-				$message = 'Error al ejecutar sentencia <b>Crud::order</b>.';
-				$exception = 'No se a inicializado ninguna consulta <b>Crud::select</b>.';
+				$message = 'Error al ejecutar sentencia "Crud::order".';
+				$exception = 'No se a inicializado ninguna consulta "Crud::select".';
 				$bitphp->error->trace( $message, $exception );
 			}
 
@@ -205,7 +205,7 @@
 
 			if( $this->result === null ) {
 				$message = 'Error al mostrar los resultados de la consulta.';
-				$exception = 'Ninguna sentencia ha sido ejecutada: <b>Crud::execute</b>.';
+				$exception = 'Ninguna sentencia ha sido ejecutada: "Crud::execute".';
 				$bitphp->error->trace( $message, $exception );
 			}
 

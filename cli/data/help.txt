@@ -6,6 +6,7 @@
 
  actions:
    init   - Create new app
+         
             [optional parameters]
             mvc       - To create a new mvc application
             hmvc      - To create a new hmvc application
@@ -19,6 +20,18 @@
                               - Create new config file in /app
             config.json <dirpath> 
                               - Create new config file in <dir>
+
+   error - Cheking for errors
+
+            [parameters]
+            ERROR_ID
+                              - Check info of specific error
+            dump
+                              - Clear error log
+            all
+                              - Check for all errors
+
+
 
    update - Check for updates
 

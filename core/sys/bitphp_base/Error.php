@@ -28,30 +28,40 @@
     *	@param boolean $trace indicates whether the error should be traced
     *	@return void
     */
-    public function trace($description, $exception, $print_trace = true) {
+    public function trace($description, $exception) {
       $ex = new Exception();
       $trace = $ex->getTrace();
+      $date = date('l jS \of F Y h:i:s A');
 
       $log = [
-          "TimeStamp" => date('l jS \of F Y h:i:s A')
-        , "Description" => $description
-        , "Exception" => $exception
-        , "Trace" => $trace
-        , "PrintTrace" => $print_trace
+          'timestamp' => $date
+        , 'description' => $description
+        , 'exception' => $exception
+        , 'trace' => $trace
+        , 'id' => md5($date . $description)
       ];
 
+      $logged = $this->log( json_encode( $log ) . "\n" );
+
+      if($logged === true) {
+        $logged = 'Se registro el error en <i>core/log/errors.log</i>';
+      } else {
+        $logged = 'No se pudo registrar el error, revise qué haya permisos de escritura en <i>core/log/errors.log</i>';
+      }
+
       if( $this->debug ){
-          require('core/views/error.php');
+        require 'core/views/sys_header.php';
+        require 'core/views/error.php';
+        require 'core/views/sys_footer.php';
       } else {
         $this->notFound();
       }
 
-      $this->log( json_encode( $log, JSON_PRETTY_PRINT ) . '%/error/%' );
       exit;
     }
 
     public function log( $log ) {
-      @error_log( $log, 3, 'core/log/errors.log' );
+      return @error_log( $log, 3, 'core/log/errors.log' );
     }
 
     public function notFound() {

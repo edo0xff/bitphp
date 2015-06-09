@@ -24,10 +24,10 @@
         if( class_exists( $_class ) ) {
           return 1;
         } else {
-          throw new Exception('La clase <b>'.$_class.'</b> no existe dentro del fichero <b>'.$_file.'</b>.');
+          throw new Exception('La clase "'.$_class.'" no existe dentro del fichero "'.$_file.'".');
         }
       } else {
-        throw new Exception('El fichero <b>'.$_file.'</b> no existe.');
+        throw new Exception('El fichero "'.$_file.'" no existe.');
       }
     }
 
@@ -69,8 +69,8 @@
       }	
         else 
       {
-        $_d = 'El modulo <b>'.$_name.'</b> no se pudo cargar.';
-        $_c = 'El fichero <b>'.$_file.'</b> no existe.';
+        $_d = 'El modulo "'.$_name.'" no se pudo cargar.';
+        $_c = 'El fichero "'.$_file.'" no existe.';
         $bitphp->error->trace($_d, $_c);
       }
     }
@@ -133,16 +133,16 @@
         } 
           else 
         {
-          $d = 'Error en controlador <b>'. $_name .'</b>.';
-          $m = 'No contiene la accion <b>'. $_method .'()</b>.';
-          $bitphp->error->trace($d, $m, False);
+          $d = 'Error en controlador "'. $_name .'".';
+          $m = 'No contiene la accion "'. $_method .'()".';
+          $bitphp->error->trace($d, $m);
         }
       } 
         catch(Exception $_e) 
       {
-        $_d = 'El controlador <b>'.$_name.'</b> no se pudo cargar.';
+        $_d = 'El controlador "'.$_name.'" no se pudo cargar.';
         $_c = $_e->getMessage();
-        $bitphp->error->trace($_d, $_c, False);
+        $bitphp->error->trace($_d, $_c);
       }
     }
 
@@ -169,7 +169,7 @@
       } 
         catch(Exception $_e) 
       {
-        $_d = 'El modelo <b>'.$_name.'</b> no se pudo cargar.';
+        $_d = 'El modelo "'.$_name.'" no se pudo cargar.';
         $_c = $_e->getMessage();
         $bitphp->error->trace($_d, $_c);
       }
@@ -198,8 +198,8 @@
         if(file_exists($_file)) {
           require($_file);
         } else {
-          $description = 'La vista <b>'.$_names[$_view_index].'</b> no se pudo cargar.';
-          $exception = 'El fichero <b>'.$_file.'</b> no existe.';
+          $description = 'La vista "'.$_names[$_view_index].'" no se pudo cargar.';
+          $exception = 'El fichero "'.$_file.'" no existe.';
           $bitphp->error->trace( $description, $exception );
         }
       }

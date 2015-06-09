@@ -18,22 +18,25 @@
 		public $error = null;
 		public $route = null;
 
-		public function __construct() {
+		private function loadConfig() {
 			$this->config = new Config();
 			$this->error = new ErrorDebugger( $this->config->environmentProperty('debug') );
 		}
 
 		public function loadMvcServer() {
+			$this->loadConfig();
 			require('core/sys/MvcServer.php');
 			return new MvcServer();
 		}
 
 		public function loadMicroServer() {
+			$this->loadConfig();
 			require('core/sys/MicroServer.php');
 			return new MicroServer();
 		}
 
 		public function loadApiServer() {
+			$this->loadConfig();
 			require('core/sys/ApiServer.php');
 			return new ApiServer();
 		}

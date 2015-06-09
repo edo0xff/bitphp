@@ -11,6 +11,7 @@
 	require 'data/igniters/Config.php';
 	require 'data/igniters/RemoveIgniter.php';
 	require 'data/igniters/Update.php';
+	require 'data/igniters/ErrorChecker.php';
 
 	use \BitPHP\Cli\Igniters\Config;
 	use \BitPHP\Cli\StandardLibrary as Standard;
@@ -19,6 +20,7 @@
 	use \BitPHP\Cli\Igniters\Micro;
 	use \Bitphp\Cli\Igniters\Rest;
 	use \BitPHP\Cli\Igniters\Update;
+	use \BitPHP\Cli\Igniters\ErrorChecker as Error;
 	use \BitPHP\Cli\RemoveIgniter as Remove;
 
 	class BitphpCli {
@@ -69,6 +71,25 @@
 				default:
 					Standard::output("Error: invalid option to create.",'FAILURE');
 					$this->suggestHelps();
+					break;
+			}
+		}
+
+		public function error( $args ) {
+			if( !isset( $args[2] ) ){ $this->notArguments(); return; }
+
+			switch ($args[2]) {
+				case 'dump':
+					Error::dump();
+					break;
+
+				case 'all':
+					Error::all();
+					break;
+				
+				default:
+					Standard::output("Cheking for error " . $args[2]);
+					Error::check($args[2]);
 					break;
 			}
 		}
