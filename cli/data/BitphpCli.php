@@ -46,6 +46,12 @@
 			Standard::output( $help );
 		}
 
+		public function version() {
+			$data = json_decode(file_get_contents('data/update.json'), true);
+			Standard::output('CLI  version: dummy 1.2');
+			Standard::output('Core version: ' . $data['code_name']);
+		}
+
 		public function remove() {
 			Standard::output( 'Are you sure? (yes/no):' , 'EMPASIS', false );
 			$confirm = Standard::input();

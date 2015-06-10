@@ -1,7 +1,3 @@
-+-----------------------------------------+
-|  BitPHP Command Line Interface v 1.0.0  |
-+-----------------------------------------+
-
  usage: php dummy [action] [parameters]
 
  actions:
