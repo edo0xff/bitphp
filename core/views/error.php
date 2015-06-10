@@ -4,4 +4,6 @@
 	<p><?php echo $logged ?></p>
 	<p>Ejecuta el siguiente comando en la <b>consola de bitphp</b> para ver detalles del error:</p>
 	<p><span class="inline-comment">~$ php dummy error <?php echo $log['id'] ?> </span></p>
+    <br><br>
+    <p><a href="http://bitphp.root404.com/docs">Leer documentación &raquo;</a></p>
 </div>
