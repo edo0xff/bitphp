@@ -6,6 +6,6 @@
 		por favor utiliza la <b>linea de comandos de bitphp</b> en su lugar.
 	</p><br>
 	<p><span class="inline-comment">~$ php dummy create config.json</span></p>
-    <br><br>
+    <br>
     <p><a href="http://bitphp.root404.com/docs">Leer documentación &raquo;</a></p>
 </div>				
