@@ -1,7 +1,4 @@
-<?php namespace BitPHP\Sys;
-
-  use PDO;
-  use PDOException;
+<?php
   
   /**
   * @author Eduardo B <ms7rbeta@gmail.com>
@@ -31,12 +28,12 @@
     }
 
     /**
-    *	Returns mysql driver, with default data base conection parameters (if not overwritten)
+    *   Returns mysql driver, with default data base conection parameters (if not overwritten)
     *
-    *	@param string $dbname data base's name
-    *	@param array $p connection parameters
-    *	@return object
-    *	@todo modified to other controllers database and charset, mysql and utf8 by default
+    *   @param string $dbname data base's name
+    *   @param array $p connection parameters
+    *   @return object
+    *   @todo modified to other controllers database and charset, mysql and utf8 by default
     */
     public function driver($dbname, $params = Null) {
       global $bitphp;

@@ -58,8 +58,10 @@
                     $count = 0;
 
                     foreach($error['trace'] as $hop) {
-                        Standard::output($count . ' : In ' . $hop['file'] . ' at line ' . $hop['line'], 'INFO');
-                        $count++;
+                        if(isset($hop['file']) && isset($hop['line'])) {
+                            Standard::output($count . ' : In ' . $hop['file'] . ' at line ' . $hop['line'], 'INFO');
+                            $count++;
+                        }
                     }
 
                     echo PHP_EOL;

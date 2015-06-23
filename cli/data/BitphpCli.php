@@ -13,6 +13,7 @@
 	require 'data/igniters/Update.php';
 	require 'data/igniters/Socket.php';
 	require 'data/igniters/ErrorChecker.php';
+	require 'data/igniters/TemplateCompiler.php';
 
 	use \BitPHP\Cli\Igniters\Config;
 	use \BitPHP\Cli\StandardLibrary as Standard;
@@ -23,6 +24,7 @@
 	use \BitPHP\Cli\Igniters\Update;
 	use \BitPHP\Cli\Igniters\Socket;
 	use \BitPHP\Cli\Igniters\ErrorChecker as Error;
+	use \Bitphp\Cli\Igniters\TemplateCompiler as Compiler;
 	use \BitPHP\Cli\RemoveIgniter as Remove;
 
 	class BitphpCli {
@@ -39,6 +41,10 @@
 
 		private function suggestHelps() {
 			Standard::output( 'Type: "php dummy help" for help','INFO' );
+		}
+
+		public function make() {
+			Compiler::init();
 		}
 
 		public function help() {

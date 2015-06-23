@@ -1,12 +1,12 @@
 <?php
 
-	use \BitPHP\Sys\DataBase;
+	require_once 'core/modules/DataBase.php';
 	use \PDO;
 
 	/**
   	*	@author Eduardo B <ms7rbeta@gmail.com>
   	*/
-	class Crud {
+	class Crud extends DataBase {
 
 		const ORDER_DESC = 'down';
 		const ORDER_ASC  = 'up';
@@ -21,7 +21,7 @@
 		public $error = null;
 
 		public function dataBase( $dbname ) {
-			$this->db = DataBase::driver( $dbname );
+			$this->db = self::driver( $dbname );
 			return $this;
 		}
 

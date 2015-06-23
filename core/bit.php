@@ -1,6 +1,5 @@
 <?php
 	
-	require 'core/sys/bitphp_base/DataBase.php';
 	require 'core/sys/bitphp_base/Error.php';
 	require 'core/sys/bitphp_base/ConfigReader.php';
 
