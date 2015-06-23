@@ -5,6 +5,9 @@
 	class RemoveIgniter {
 
 		private static function rmdirRecursive($dir) {
+            if(!is_dir($dir))
+                return;
+            
     		foreach(scandir($dir) as $file) {
         		if ('.' === $file || '..' === $file) continue;
         		if (is_dir("$dir/$file")) self::rmdirRecursive("$dir/$file");
@@ -61,7 +64,7 @@
 			self::rmdirRecursive('bittrash');
 			mkdir('bittrash');
 			self::fullMove('../app','bittrash');
-			rename( '../index.php', 'bittrash/index.php' );
+			@rename( '../index.php', 'bittrash/index.php' );
 			Standard::output('App was remove','SUCCESS');
 			Standard::output('You can restore the last remove typing: php dummy restore','FINAL');
 		}

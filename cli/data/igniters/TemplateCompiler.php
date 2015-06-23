@@ -88,6 +88,15 @@
             $parser = new HamlPHP(new FileStorage('../app/source/tmp/'));
             $parser->disableCache();
 
+            if(!is_dir('../app/source/views/')) {
+                Standard::output('Source views dir don\'t exists, it was created.');
+                mkdir('../app/source/views/', 0777, true);
+                return;
+            }
+
+            if(!is_dir('../app/views/'))
+                mkdir('../app/views/', 0777, true);
+
             $files = self::getFileList('../app/source/views/');
             Standard::output('Parsing ' . count($files) . ' files...', 'INFO');
 
