@@ -43,8 +43,17 @@
 			Standard::output( 'Type: "php dummy help" for help','INFO' );
 		}
 
-		public function make() {
-			Compiler::init();
+		public function make($args) {
+			if( !isset( $args[2] ) ){ $this->notArguments(); return; }
+			switch ($args[2]) {
+				case 'haml':
+					Compiler::haml();
+					break;
+				
+				default:
+					# code...
+					break;
+			}
 		}
 
 		public function help() {

@@ -1,55 +1,30 @@
- usage: php dummy [action] [parameters]
+           ___  _ __  ___  __ _____       
+    ____  / _ )(_) /_/ _ \/ // / _ \  ____
+   /___/ / _  / / __/ ___/ _  / ___/ /___/
+        /____/_/\__/_/  /_//_/_/          
 
- actions:
-   init   - Create new app
-         
-            [optional parameters]
-            mvc       - To create a new mvc application
-            hmvc      - To create a new hmvc application
-            micro     - To create a new micro mvc app
-            rest      - To create a new RESTful app
-            socket    - To create a new Socket server
+   [Initialize app examples]
+      php dummy init mvc       - To create a new mvc application
+      php dummy init hmvc      - To create a new hmvc application
+      php dummy init micro     - To create a new micro mvc app
+      php dummy init rest      - To create a new RESTful app
+      php dummy init socket    - To create a new Socket server
 
-   create - Create something
-            
-            [paremeters]
-            config.json       
-                              - Create new config file in /app
-            config.json <dirpath> 
-                              - Create new config file in <dir>
+   [App Config]
+      php dummy create config.json           - Create new config file in /app
+      php dummy create config.json <dirpath> - Create new config file in <dirpath>
 
-   error - Cheking for errors
+   [Error management]
+      php dummy error <err-id>   - Check info of specific error
+      php dummy error dump       - Clear error log
+      php dummy error all        - Check for all errors
 
-            [parameters]
-            ERROR_ID
-                              - Check info of specific error
-            dump
-                              - Clear error log
-            all
-                              - Check for all errors
+   [General management]
+      php dummy version    - Display bitphp version
+      php dummy update     - Check for updates
+      php dummy remove     - Delete de app
+      php dummy restore    - Restore the last removed app
 
-
-
-   update - Check for updates
-
-   remove - Delete de app
-
-   restore - Restore the last removed app
-
-
-[EXAMPLES]
-
-   php dummy init 
-   - To create a blank app
-
-   php dummy init mvc 
-   - Initialize a MVC service
-
-   php dummy create config.json 
-   - To create a config.json in app/
-
-   php dummy create config.json /home/User/Documents/
-   - To create a config.json in /home/User/Documents/
-
-   php dummy revome
-   - To remove the app
+   [Template compiler]
+      php dummy make haml  - Parse haml templates from /app/source/views/ to
+                             /app/views/

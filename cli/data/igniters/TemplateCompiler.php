@@ -83,7 +83,7 @@
             return $files;
         }
 
-        public static function init() {
+        public static function haml() {
             //see filectime()
             $parser = new HamlPHP(new FileStorage('../app/source/tmp/'));
             $parser->disableCache();
@@ -109,4 +109,6 @@
 
             Standard::output(count($files) . ' files were built.', 'FINAL');
         }
+
+        public static function init() { }
     }
