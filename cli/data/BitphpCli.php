@@ -63,7 +63,7 @@
 
 		public function version() {
 			$data = json_decode(file_get_contents('data/update.json'), true);
-			Standard::output('CLI  version: dummy 1.2');
+			Standard::output('CLI  version: dummy 1.5');
 			Standard::output('Core version: ' . $data['code_name']);
 		}
 
@@ -87,6 +87,7 @@
 			if( !isset( $args[2] ) ){ $this->notArguments(); return; }
 			switch ( $args[2] ) {
 				case 'config.json':
+				case 'config':
 					$output_dir = isset( $args[3] ) ? $args[3] : null;
 					Config::create( $output_dir );
 					break;

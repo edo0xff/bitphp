@@ -32,10 +32,9 @@
 		}
 
 		public function retreive( $info ) {
-			Standard::output('Files to download: ','INFO');
-			foreach ($info['files_changed'] as $file) {
-				Standard::output($file);
-			}
+			$total = count($info['files_changed']);
+			Standard::output("$total files to download: ",'INFO');
+			Standard::output('Downloading...','INFO');
 
 			$files = @file_get_contents( self::SERVER_URI_BASE . '/retreive' );
 			if( $files === false ) {
@@ -55,6 +54,19 @@
 
 				File::write('../' . $files[$i]['name'],$files[$i]['content']);
 				Standard::output($files[$i]['name'] . ' was updated!','SUCCESS');
+				sleep(0.25);
+			}
+
+			Standard::output('Removing deprecated files...', 'INFO');
+
+			foreach ($info['files_deleted'] as $file) {
+				Standard::output("$file was deleted", 'FAILURE');
+				if(is_dir($file)) {
+					@rmdir($file);
+					continue;
+				}
+
+				@unlink($file);
 			}
 
 			File::write('data/update.json', json_encode($info,JSON_PRETTY_PRINT));

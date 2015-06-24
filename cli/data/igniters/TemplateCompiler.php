@@ -26,14 +26,6 @@
             File::write($file, json_encode($meta, JSON_PRETTY_PRINT));
         }
 
-
-        private static function createOutputDir($dir) {
-            $realDir = str_replace('../app/source/views/', '', $dir);
-            if(!is_dir('../app/views/' . $realDir)) {
-                mkdir('../app/views/' . $realDir, 0777, true);
-            }
-        }
-
         private static function parseOutputFile($file) {
             $outfile = str_replace(['../app/source/views/','.haml'], ['',''], $file);
             return '../app/views/' . $outfile .'.php';
@@ -50,9 +42,6 @@
                 if(is_dir($dir . $file)) {
                     $recursive = self::getFileList($dir . $file . '/');
                     $files = array_merge($files, $recursive);
-
-                    //create dir for output
-                    self::createOutputDir($dir . $file);
                     continue;
                 }
 
