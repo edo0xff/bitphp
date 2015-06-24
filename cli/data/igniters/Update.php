@@ -54,7 +54,7 @@
 
 				File::write('../' . $files[$i]['name'],$files[$i]['content']);
 				Standard::output($files[$i]['name'] . ' was updated!','SUCCESS');
-				sleep(0.25);
+				usleep(50000);
 			}
 
 			Standard::output('Removing deprecated files...', 'INFO');
