@@ -3,6 +3,7 @@
 	require 'data/ConsoleColors.php';
 	require 'data/StandardLibrary.php';
 	require 'data/FileWriter.php';
+	require 'data/DirHashing.php';
 	require 'data/igniters/Igniter.php';
 	require 'data/igniters/Rest.php';
 	require 'data/igniters/Micro.php';
@@ -62,8 +63,9 @@
 		}
 
 		public function version() {
-			$data = json_decode(file_get_contents('data/update.json'), true);
-			Standard::output('CLI  version: dummy 1.5');
+			$data = json_decode(file_get_contents('../core/info.json'), true);
+			Standard::output('Last release: ' . $data['last_release']);
+			Standard::output('CLI  version: ' . $data['cli_version']);
 			Standard::output('Core version: ' . $data['code_name']);
 		}
 

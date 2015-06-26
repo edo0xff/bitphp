@@ -73,6 +73,46 @@
             $this->eventListeners[$event]($param1, $param2);
         }
 
+        private function acceptConnections(&$changed) {
+            if (in_array($this->mainSocket, $changed)) {
+                $client = new Client(socket_accept($this->mainSocket)); //accpet new socket
+
+                $this->clients['objects'][] = $client;
+                $this->clients['sockets'][] = $client->socket; //add socket to client array
+
+                if($_SOCKET_TYPE == 1) {
+                    Handshake::perform($client->socket, $this->address, $this->port);
+                }
+        
+                $this->triggerEvent('connect', $client);
+        
+                //make room for new socket
+                $found_socket = array_search($this->mainSocket, $changed);
+                unset($changed[$found_socket]);
+            }
+        }
+
+        private function processConnections(&$changed) {
+            foreach ($changed as $changedSocket) {
+                $clientIndex = array_search($changedSocket, $this->clients['sockets']);
+
+                while(socket_recv($changedSocket, $buffer, 1024, 0) >= 1)
+                {
+                    $buffer = Handshake::unmask($buffer); //unmask data
+                    $this->triggerEvent('read', $this->clients['objects'][$clientIndex], $buffer);
+                    break 2; //exist this loop
+                }
+
+                $buffer = @socket_read($changedSocket, 1024, PHP_NORMAL_READ);
+
+                if( $buffer === false ) {
+                    $this->triggerEvent('disconnect', $this->clients['objects'][$clientIndex]);
+                    unset($this->clients['objects'][$clientIndex]);
+                    unset($this->clients['sockets'][$clientIndex]);
+                }
+            }
+        }
+
         public function mode($mode) {
             global $_SOCKET_TYPE;
             $_SOCKET_TYPE = $mode;
@@ -126,44 +166,13 @@
             global $_SOCKET_TYPE;
 
             do {
+                
                 $changed = $this->clients['sockets'];
                 socket_select($changed, $write = NULL, $except= NULL, $tv_sec = 5);
 
-                if (in_array($this->mainSocket, $changed)) {
-                    $client = new Client(socket_accept($this->mainSocket)); //accpet new socket
-
-                    $this->clients['objects'][] = $client;
-                    $this->clients['sockets'][] = $client->socket; //add socket to client array
-
-                    if($_SOCKET_TYPE == 1) {
-                        Handshake::perform($client->socket, $this->address, $this->port);
-                    }
-        
-                    $this->triggerEvent('connect', $client);
-        
-                    //make room for new socket
-                    $found_socket = array_search($this->mainSocket, $changed);
-                    unset($changed[$found_socket]);
-                }
-
-                foreach ($changed as $changedSocket) {
-                    $clientIndex = array_search($changedSocket, $this->clients['sockets']);
-
-                    while(socket_recv($changedSocket, $buffer, 1024, 0) >= 1)
-                    {
-                        $buffer = Handshake::unmask($buffer); //unmask data
-                        $this->triggerEvent('read', $this->clients['objects'][$clientIndex], $buffer);
-                        break 2; //exist this loop
-                    }
-
-                    $buffer = @socket_read($changedSocket, 1024, PHP_NORMAL_READ);
-
-                    if( $buffer === false ) {
-                        $this->triggerEvent('disconnect', $this->clients['objects'][$clientIndex]);
-                        unset($this->clients['objects'][$clientIndex]);
-                        unset($this->clients['sockets'][$clientIndex]);
-                    }
-                }
+                $this->acceptConnections($changed);
+                $this->processConnections($changed);
+                
             } while ($this->doLoop);
 
             Standard::output("Cerrando socket...");

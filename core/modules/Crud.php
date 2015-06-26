@@ -3,9 +3,7 @@
 	require_once 'core/modules/DataBase.php';
 	use \PDO;
 
-	/**
-  	*	@author Eduardo B <ms7rbeta@gmail.com>
-  	*/
+  	#coded by Eduardo B <ms7rbeta@gmail.com>
 	class Crud extends DataBase {
 
 		const ORDER_DESC = 'down';

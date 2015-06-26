@@ -22,6 +22,7 @@
 
             global $bitphp;
             $_ROUTE = $bitphp->route;
+            $this->template_vars['_ROUTE'] = $bitphp->route;
 
             $templates = is_array($templates) ? $templates : [$templates];
             $i = count($templates);

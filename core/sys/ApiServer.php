@@ -117,7 +117,7 @@
       $this->routes['DELETE'][$pattern] = $callback;
     }
 
-    public function run() {
+    public function run($routes = null) {
     	try {
     		parent::run( $this->routes[ $this->method ] );
     	} catch ( \Exception $e ) {

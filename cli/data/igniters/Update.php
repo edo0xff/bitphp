@@ -3,10 +3,11 @@
 	use \BitPHP\Cli\StandardLibrary as Standard;
 	use \BitPHP\Cli\FileWriter as File;
 	use \BitPHP\Cli\Interfaces\Igniter;
+	use \BitPHP\Cli\DirHashing;
 
 	class Update implements Igniter {
 
-		const SERVER_URI_BASE = 'http://bitapi.root404.com/update';
+		const SERVER_URI_BASE = 'http://bitapi.root404.com/v2/update';
 
 		private static function check() {
 
@@ -18,60 +19,59 @@
 				return false;
 			}
 
-			$info = json_decode($info,true)['result'];
-
-			$last_update = file_get_contents('data/update.json');
-			$last_update = json_decode($last_update,true);
-
-			if( $last_update['current_release'] == $info['current_release'] ) {
-				Standard::output('Without new updates, your bitphp already updated :D','FINAL');
-				return false;
-			}
-
-			return $info;
+			return json_decode($info,true)['result'];
 		}
 
-		public function retreive( $info ) {
-			$total = count($info['files_changed']);
-			Standard::output("$total files to download: ",'INFO');
-			Standard::output('Downloading...','INFO');
+		private function rmDeprecatedFiles($files) {
+			foreach ($files as $file) {
+				unlink($file);
+				Standard::output("$file was removed.",'FAILURE');
 
-			$files = @file_get_contents( self::SERVER_URI_BASE . '/retreive' );
-			if( $files === false ) {
-				Standard::output("Can't download files",'FAILURE');
-				return false;
-			}
-
-			$files = json_decode($files,true)['files'];
-			$count = count($files);
-
-			for ( $i = 0; $i < $count; $i++ ) {
-				$cheksum = md5($files[$i]['content']);
-				if( $cheksum != $files[$i]['checksum'] ) {
-					Standard::output('Corrupt file, retry update again','FAILURE');
-					return;
+				$dir = dirname($file);
+				$rmdir = @rmdir($dir);
+				if($rmdir) {
+					Standard::output("$dir is empty, will be removed.",'FAILURE');
 				}
-
-				File::write('../' . $files[$i]['name'],$files[$i]['content']);
-				Standard::output($files[$i]['name'] . ' was updated!','SUCCESS');
+					
 				usleep(50000);
 			}
+		}
 
-			Standard::output('Removing deprecated files...', 'INFO');
+		private function retreive( $data ) {
+			$url = self::SERVER_URI_BASE . '/retreive';
+			$data = ['_files' => $data];
 
-			foreach ($info['files_deleted'] as $file) {
-				Standard::output("$file was deleted", 'FAILURE');
-				if(is_dir($file)) {
-					@rmdir($file);
+			// use key 'http' even if you send the request to https://...
+			$options = array(
+    			'http' => array(
+        			'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+        			'method'  => 'POST',
+        			'content' => http_build_query($data),
+    			),
+			);
+
+			$context  = stream_context_create($options);
+			$result  = file_get_contents($url, false, $context);
+			$result  = json_decode($result, true)['result'];
+			$corrupt = array();
+
+			foreach ($result as $file => $data) {
+				$checksum = md5($data['content']);
+				if( $checksum != $data['checksum'] ) {
+					Standard::output('Corrupt file ...','FAILURE');
+					$corrupt[] = $file;
 					continue;
 				}
 
-				@unlink($file);
+				File::write($file, $data['content']);
+				Standard::output("$file was updated.",'SUCCESS');
+				usleep(50000);
 			}
 
-			File::write('data/update.json', json_encode($info,JSON_PRETTY_PRINT));
-			Standard::output('Successful updated!','FINAL');
-			Standard::output('Update info: ' . $info['more_info'], 'FINAL');
+			if(!empty($corrupt)) {
+				Standard::output("Downloading again corrupt files ...", 'INFO');
+				self::retreive($corrupt);
+			}
 		}
 
 		public static function init() {
@@ -80,19 +80,75 @@
 				return;
 			}
 
-			$message  = "New update diaposable!\n";
-			$message .= "Date: " . $info['date'] . "\n";
-			$message .= "Files with changes: " .  $info['total_changes'] . "\n";
-			$message .= "Description: " . $info['description'] . "\n";
-			$message .= "Update now? (yes/no): ";
-			
-			Standard::output($message,'EMPASSIS',false);
+			$coreHash = DirHashing::scan('../core');
+			$cliHash  = DirHashing::scan('../cli');
+			$list = array_merge($coreHash, $cliHash);
+
+			$toUpdate = array();
+			$newFiles = array();
+			$toDelete = array();
+
+			$count = 0;
+
+			foreach ($info as $file) {
+				$name = $file['file'];
+				$hash = $file['hash'];
+
+				if( isset( $list[$name] ) ) {
+					if( $list[$name] != $hash ) {
+						$toUpdate[] = $name;
+						Standard::output("$name to be updated... [OLD]",'EMPASIS');
+					} else {
+						Standard::output("$name ... [OK]");
+					}
+
+					unset($list[$name]);
+
+				} else {
+					$newFiles[] = $name;
+					Standard::output("$name to be created ... [NEW]",'INFO');
+				}
+				usleep(50000);
+				$count++;
+			}
+
+			foreach ($list as $file => $hash) {
+				Standard::output("$file is deprecated ... [DELETE]", 'FAILURE');
+				$toDelete[] = $file;
+				usleep(50000);
+			}
+
+			$countUpdate = count($toUpdate);
+			$countNew    = count($newFiles);
+			$countDelete = count($toDelete);
+
+			$message = PHP_EOL;
+			$message .= $countUpdate . ' files to UPDATE, ';
+			$message .= $countNew . ' NEW files, ';
+			$message .= $countDelete . ' files to DELETE.';
+			Standard::output($message);
+
+			if( !$countUpdate && !$countNew && !$countDelete ) {
+				Standard::output('Nothing more to do.', 'FINAL');
+				return;
+			}
+
+			Standard::output('Apply changes? (yes/no): ', null, false);
 			$input = Standard::input();
 
 			if( $input == 'no' || $input == 'n' ) {
 				return;
 			}
 
-			self::retreive($info);
+			if( $countDelete )
+				self::rmDeprecatedFiles($toDelete);
+
+			if( !$countUpdate && !$countNew ) {
+				Standard::output('Nothing to download.', 'FINAL');
+				return;
+			}
+
+			Standard::output('Downloading files, please wait...', 'INFO');
+			self::retreive(array_merge($toUpdate, $newFiles));
 		}
 	}
