@@ -1,0 +1,33 @@
+{
+	/**
+		Si no se indica tomara valor 'true' por defecto
+
+		"debug": true  - mostrara todo los errores.
+		"debug": false - ningun error sera mostrado (inluyendo errores de php)
+						 en su lugar su mostrar una pagina de 404 not found
+	**/
+	"debug": true,
+	/**
+		Parametros de conexion a la base de datos usados por los modelos
+		si uno de ellos no se indica se tomaran los valores por defecto:
+
+		pass -> null
+		user -> "root"
+		host -> "localhost"
+
+		"database.pass": "YourDataBasePass",
+		"database.user": "YourDataBaseUser",
+		"database.host"; "YourDataBaseHost"
+	 **/
+	"database.pass": "holamundo",
+	/**
+		Alias para nombres de bases de datos, al seleccionar la base de datos
+		de algun modelo, por medio de algún modulo para bases de datos (MySql por eg.)
+		en lugar del nombre puedes indicar un alias:
+
+		$this->database('alias.foo');
+
+		y este tomara el nombre aquí indicado.
+	**/
+	"database.alias.uni": "dbumb"
+}
