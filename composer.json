@@ -1,0 +1,36 @@
+{
+    "name": "bitphp/bitphp",
+    "type": "project",
+    "description": "PHP Framework for dummies",
+    "keywords": ["php", "framework", "mvc", "hmvc", "oop","sockets"],
+    "homepage": "http://bitphp.root404.com",
+    "version": "4.0.0-dev",
+    "license": "GPL-3.0+",
+    "authors": [      
+        {
+            "name":"Eduardo Becerril Romero",
+            "email":"eduardo@root404.com",
+            "homepage":"http://root404.com",
+            "role":"Developer"
+        }
+    ],
+    "support": {
+        "email": "support@root404.com"
+    },
+    "repository":{
+        "type":"git",
+        "url":"https://github.com/0oeduardoo0/bitphp"
+    },
+    "require": {
+        "php":">=5.4.0"
+    },
+    "autoload": {
+        "psr-4": { 
+            "Bitphp\\Core\\": "vendor/bitphp-core/src",
+            "Bitphp\\Base\\": "vendor/bitphp-base/src",
+            "Bitphp\\Modules\\": "vendor/bitphp-modules/src",
+            "App\\Controllers\\": "app/controllers",
+            "App\\Models\\": "app/models"
+        }
+    }
+}
