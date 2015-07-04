@@ -164,8 +164,8 @@ class Autoload
 $loader = new Autoload;
 $loader->register();
 
-$loader->addNamespace('Bitphp\Core', 'bitphp/bitphp-core/src');
-$loader->addNamespace('Bitphp\Base', 'bitphp/bitphp-base/src');
-$loader->addNamespace('Bitphp\Modules', 'bitphp/bitphp-modules/src');
-$loader->addNamespace('Bitphp\Cli', 'bitphp/bitphp-cli/src');
+$loader->addNamespace('Bitphp\Core', 'src/bitphp-core/src');
+$loader->addNamespace('Bitphp\Base', 'src/bitphp-base/src');
+$loader->addNamespace('Bitphp\Modules', 'src/bitphp-modules/src');
+$loader->addNamespace('Bitphp\Cli', 'src/bitphp-cli/src');
 $loader->addNamespace('App\Models', 'app/models');

@@ -1,5 +1,5 @@
 {
-    "name": "bitphp/bitphp",
+    "name": "bitphp/experimental",
     "type": "project",
     "description": "PHP Framework for dummies",
     "keywords": ["php", "framework", "mvc", "hmvc", "oop","sockets"],
