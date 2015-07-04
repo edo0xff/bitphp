@@ -36,9 +36,9 @@
 				, '?>'
 				, '<?php foreach('
 				, '<?php endforeach ?>'
-				, '<link rel="stylesheet" href="<?php echo $_BITPHP[\'base_uri\'] ?>/public/css/'
+				, '<link rel="stylesheet" href="<?php echo $_ROUTE[\'base_uri\'] ?>/public/css/'
 				, '.css">'
-				, '<script src="<?php echo $_BITPHP[\'base_uri\'] ?>/public/js/'
+				, '<script src="<?php echo $_ROUTE[\'base_uri\'] ?>/public/js/'
 				, '.js"></script>'
 			];
 

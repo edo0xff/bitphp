@@ -1,5 +1,8 @@
 {
 	"debug": true,
 	"database.pass": "holamundo",
-	"database.alias.uni": "dbumb"
+	"database.alias.uni": "dbumb",
+	"medusa.compress": true,
+	"cache.time": 15,
+	"cache": true
 }

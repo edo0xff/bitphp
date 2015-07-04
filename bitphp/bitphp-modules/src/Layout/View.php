@@ -3,6 +3,8 @@
 	namespace Bitphp\Modules\Layout;
 
 	use \Bitphp\Core\Globals;
+	use \Bitphp\Core\Config;
+	use \Bitphp\Core\Cache;
 
 	/**
 	 *	Modulo para el manejo de vistas
@@ -19,8 +21,14 @@
 		 */
 		protected function clean() {
 			$this->source = '';
-			$this->loaded = false;
+			$this->loaded = array();
 			$this->variables = array();
+		}
+
+		protected function render() {
+			foreach ($this->loaded as $file) {
+				$this->source .= file_get_contents($file);
+			}
 		}
 
 		public function __construct() {
@@ -50,8 +58,7 @@
 				return false;
 			}
 
-			$this->loaded = true;
-			$this->source .= file_get_contents($file);
+			$this->loaded[] = $file;
 			return $this;
 		}
 
@@ -67,35 +74,33 @@
 		 * Imprime la vista
 		 */
 		public function draw() {
-			$_BITPHP = Globals::all();
-			
-			if(!$this->loaded) {
+			if(empty($this->loaded)) {
 				$message  = 'No se pudo mostrar la(s) vista(s) ';
 				$message .= 'ya que no se han cargado ninguna';
 				trigger_error($message);
 				return;
 			}
 
-			extract($this->variables);
-			eval("?> $this->source <?php ");
-			$this->clean();
-		}
+			$data = Cache::isCached([$this->loaded, $this->variables]);
 
-		/**
-		 * Carga la vista pero no la muestra, la retorna en un string
-		 */
-		public function read() {
-			if(!$this->loaded) {
-				$message  = 'No se pudo leer la(s) vista(s) ';
-				$message .= 'ya que no se han cargado ninguna';
-				trigger_error($message);
+			if( false !== $data ) {
+				$this->source = $data;
+				echo $data;
 				return;
 			}
 
+			$_ROUTE = Globals::all();
+
+			$this->render();
+
 			ob_start();
-			$this->draw();
+			extract($this->variables);
+			eval("?> $this->source <?php ");
+			$data = ob_get_clean();
+
+			Cache::save([$this->loaded, $this->variables], $data);
 			$this->clean();
-			return ob_get_clean();
+			echo $data;
 		}
 
 		/**

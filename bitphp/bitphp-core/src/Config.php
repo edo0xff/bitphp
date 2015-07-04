@@ -28,4 +28,9 @@
 			global $_BITPHP_CONFIG;
 			return isset($_BITPHP_CONFIG[$index]) ? $_BITPHP_CONFIG[$index] : null;
 		}
+
+		public function all() {
+			global $_BITPHP_CONFIG;
+			return $_BITPHP_CONFIG;
+		}
 	}

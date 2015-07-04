@@ -26,18 +26,18 @@
 	<div class="container">
 		<div class="row">
 			<h3>
-				<span class="foo">#</span>
+				<span class="foo">#</span> &nbsp;
 				Bitphp is running in this magical land, with unicorns and rainbowns!
 			</h3>
 			<h3>
-				<span class="foo">#</span>
+				<span class="foo">#</span> &nbsp;
 				Danger! This version is experimental, somethings can to explot D:
 			</h3>
 			<h3>
-				<span class="foo">#</span>
+				<span class="foo">#</span> &nbsp;
 				Bitphp global variable:
 			</h3>
-			<pre><?php echo json_encode($_BITPHP, JSON_PRETTY_PRINT) ?></pre>
+			<pre><?php echo json_encode($_ROUTE, JSON_PRETTY_PRINT) ?></pre>
 		</div>
 	</div>
 </body>
