@@ -9,8 +9,8 @@
 
 		private static function generateName($data) {
 			$label = json_encode($data);
-			$dir = Globals::get('base_path') . '/olimpus/';
-			return $dir . md5($label) . '.cached';
+			$dir = Globals::get('base_path') . '/olimpus/cache/';
+			return $dir . md5($label) . '.lock';
 		}
 
 		public static function isCached($data) {

@@ -89,9 +89,8 @@
 				return;
 			}
 
-			$_ROUTE = Globals::all();
-
 			$this->render();
+			$_ROUTE = Globals::all();
 
 			ob_start();
 			extract($this->variables);

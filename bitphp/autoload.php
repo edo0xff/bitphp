@@ -167,5 +167,5 @@ $loader->register();
 $loader->addNamespace('Bitphp\Core', 'bitphp/bitphp-core/src');
 $loader->addNamespace('Bitphp\Base', 'bitphp/bitphp-base/src');
 $loader->addNamespace('Bitphp\Modules', 'bitphp/bitphp-modules/src');
-$loader->addNamespace('App\Controllers', 'app/controllers');
+$loader->addNamespace('Bitphp\Cli', 'bitphp/bitphp-cli/src');
 $loader->addNamespace('App\Models', 'app/models');

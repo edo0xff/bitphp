@@ -1,0 +1,5 @@
+#!/usr/bin/php
+<?php
+
+	require 'bitphp/autoload.php';
+	\Bitphp\Cli\Dummy::run();

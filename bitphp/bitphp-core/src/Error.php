@@ -24,7 +24,7 @@
 			$debug = Config::param('debug');
 			$this->debug = ( null === $debug ) ? true : $debug;
 
-    		$this->log_file = Globals::get('base_path') . '/app/errors.log';
+    		$this->log_file = Globals::get('base_path') . '/olimpus/log/errors.log';
     		$this->errors = array();
 		}
 		
@@ -71,10 +71,9 @@
 			];
 		}
 
-		public function fatalErrorHandler() {
-			$_BITPHP = Globals::all();
-			
+		public function fatalErrorHandler() {		
 			$error = error_get_last();
+			
 			if(null !== $error) {
 				 $this->globalErrorHandler(
 				 	  E_ERROR
@@ -88,7 +87,7 @@
 				#Si esta habilitado el debug lo muestra y si no manda 404
 				if($this->debug) {
 					$errors = $this->errors;
-					require 'views/ErrorMessage.php';
+					require Globals::get('base_path') . '/olimpus/views/error_message.php';
 				} else {
 					echo "404 Not Found";
 				}

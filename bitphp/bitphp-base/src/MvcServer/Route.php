@@ -1,4 +1,6 @@
-<?php namespace Bitphp\Base\MvcServer;
+<?php 
+
+	namespace Bitphp\Base\MvcServer;
 
 	/**
 	 *	Recibe como parametro en el contructor el arreglo 
@@ -41,6 +43,7 @@
 
 		public static function parse($request_uri) {
 			$request_uri = explode('/', $request_uri);
+
 			$result = [
 				  'controller' => self::controller($request_uri)
 				, 'action' => self::action($request_uri)

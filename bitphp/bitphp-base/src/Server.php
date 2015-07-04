@@ -31,7 +31,7 @@
 			Globals::registre([
 				  'base_path' => realpath('')
 				, 'base_uri' => $this->getBaseUri()
-				, 'request_uri' => (isset($_GET['_uri']) ? $_GET['_uri'] : '')
+				, 'request_uri' => (isset($_GET['_bitphp']) ? $_GET['_bitphp'] : '')
 			]);
 
 			#se define archivo de configuración

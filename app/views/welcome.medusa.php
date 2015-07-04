@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>¡Bienvenido!</title>
+	<title>Yeah!</title>
 	<meta charset="utf8">
 	:css bootstrap
 	<style type="text/css">
@@ -13,31 +13,40 @@
 		.foo {
 			color: #9AA3FF;	
 		}
+
+		.sticker {
+			max-width: 150px;
+		}
 	</style>
 </head>
 <body>
 	<div class="jumbotron">
 		<div class="container">
 			<div class="row">
-				<h1>Yeah!</h1>
+				<h1>All ready!</h1>
 			</div>
 		</div>
 	</div>
 	<div class="container">
 		<div class="row">
-			<h3>
-				<span class="foo">#</span> &nbsp;
-				Bitphp is running in this magical land, with unicorns and rainbowns!
-			</h3>
-			<h3>
-				<span class="foo">#</span> &nbsp;
-				Danger! This version is experimental, somethings can to explot D:
-			</h3>
-			<h3>
-				<span class="foo">#</span> &nbsp;
-				Bitphp global variable:
-			</h3>
-			<pre><?php echo json_encode($_ROUTE, JSON_PRETTY_PRINT) ?></pre>
+			<div class="col-sm-2" align="center">
+				<img src="{{ :base }}/public/img/sticker.png" class="sticker">
+			</div>
+			<div class="col-md-8 col-md-offset-1">
+				<h3>
+					<span class="foo">#</span> &nbsp;
+					Bitphp is running in this magical land, with unicorns and rainbowns!
+				</h3>
+				<h3>
+					<span class="foo">#</span> &nbsp;
+					Danger! This version is experimental, somethings can to exploit D:
+				</h3>
+				<h3>
+					<span class="foo">#</span> &nbsp;
+					Bitphp loaded config:
+				</h3>
+				<pre>{{ json_encode(\Bitphp\Core\Config::all(), JSON_PRETTY_PRINT) }}</pre>
+			</div>
 		</div>
 	</div>
 </body>

@@ -1,0 +1,15 @@
+ <!DOCTYPE html><html><head><title>¡Bienvenido!</title><meta charset="utf8"><link rel="stylesheet" href="http://localhost/public/css/bootstrap.css"><style type="text/css">.jumbotron {color: #fff;background-color: #9AA3FF;}.foo {color: #9AA3FF;}</style></head><body><div class="jumbotron"><div class="container"><div class="row"><h1>Yeah!</h1></div></div></div><div class="container"><div class="row"><h3><span class="foo">#</span> &nbsp;Bitphp is running in this magical land, with unicorns and rainbowns!</h3><h3><span class="foo">#</span> &nbsp;Danger! This version is experimental, somethings can to exploit D:</h3><h3><span class="foo">#</span> &nbsp;Bitphp global variable:</h3><pre>{
+    "base_path": "\/var\/www\/html",
+    "base_uri": "http:\/\/localhost",
+    "request_uri": "",
+    "uri_params": [
+
+    ]
+}</pre><h3><span class="foo">#</span> &nbsp;Bitphp loaded config:</h3><pre>{
+    "debug": true,
+    "database.pass": "holamundo",
+    "database.alias.uni": "dbumb",
+    "medusa.compress": true,
+    "cache.time": 15,
+    "cache": true
+}</pre></div></div></body></html> 

@@ -11,7 +11,6 @@
 		public function __index() {
 			$this->medusa
 				 ->load('welcome')
-				 ->render()
 				 ->draw();
 		}
 	}

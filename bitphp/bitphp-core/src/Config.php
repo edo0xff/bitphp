@@ -1,4 +1,6 @@
-<?php namespace Bitphp\Core;
+<?php 
+
+	namespace Bitphp\Core;
 
 	$_BITPHP_CONFIG = array();
 
@@ -29,7 +31,7 @@
 			return isset($_BITPHP_CONFIG[$index]) ? $_BITPHP_CONFIG[$index] : null;
 		}
 
-		public function all() {
+		public static function all() {
 			global $_BITPHP_CONFIG;
 			return $_BITPHP_CONFIG;
 		}
